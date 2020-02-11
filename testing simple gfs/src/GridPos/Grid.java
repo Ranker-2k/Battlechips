@@ -8,7 +8,7 @@ public class Grid {
     private static final int BORDER = 10;
     private int width;
     private int height;
-    Rectangle canvas;
+    private Rectangle canvas;
 
     public Grid (int width, int height){
 
