@@ -1,6 +1,7 @@
 package org.academiadecodigo.rhashtafaris.battlechip;
 
 import org.academiadecodigo.rhashtafaris.battlechip.GridPos.CollisionDetector;
+import org.academiadecodigo.rhashtafaris.battlechip.GridPos.Directions;
 import org.academiadecodigo.rhashtafaris.battlechip.GridPos.Grid;
 import org.academiadecodigo.rhashtafaris.battlechip.Movables.Tank;
 import org.academiadecodigo.simplegraphics.graphics.Color;
@@ -15,6 +16,7 @@ public class Game implements KeyboardHandler {
     private Tank player1;
     private Tank player2;
     private int delay;
+    private static final int DISTANCE = 40;
     private CollisionDetector collisionDetector;
 
     public Game(int delay) {
@@ -26,14 +28,24 @@ public class Game implements KeyboardHandler {
     public void init(){
 
         collisionDetector = new CollisionDetector(canvas);
-        //keyboardInit();
-        canvas = new Grid(800,600);
-        player1 = new Tank(Color.BLUE,20,20,300,200,collisionDetector);
-        player2 = new Tank(Color.RED,20,20,300,400,collisionDetector);
+        keyboardInit();
+        canvas = new Grid(1280,720);
+        player1 = new Tank(20,20,300,collisionDetector);
+        player2 = new Tank(20,20,500,collisionDetector);
 
     }
 
-    public void start(){
+    public void start() throws InterruptedException{
+
+        init();
+        while (true){
+
+
+
+            player1.getPosition().convertPosition();
+            player2.getPosition().convertPosition();
+
+        }
 
     }
 
@@ -119,41 +131,52 @@ public class Game implements KeyboardHandler {
             //up
             //p1
             case KeyboardEvent.KEY_UP:
+                player1.move(Directions.UP, DISTANCE);
+
                 break;
             //p2
             case KeyboardEvent.KEY_W:
+                player2.move(Directions.UP, DISTANCE);
                 break;
 
             //down
             //p1
             case KeyboardEvent.KEY_DOWN:
+                player1.move(Directions.DOWN, DISTANCE);
                 break;
             //p2
             case KeyboardEvent.KEY_S:
+                player2.move(Directions.DOWN, DISTANCE);
                 break;
 
             //left
             //p1
             case KeyboardEvent.KEY_LEFT:
+                player1.move(Directions.LEFT, DISTANCE);
                 break;
             //p2
             case KeyboardEvent.KEY_A:
+                player2.move(Directions.LEFT, DISTANCE);
                 break;
 
             //right
             //p1
             case KeyboardEvent.KEY_RIGHT:
+                player1.move(Directions.RIGHT, DISTANCE);
                 break;
             //p2
             case KeyboardEvent.KEY_D:
+                player2.move(Directions.RIGHT, DISTANCE);
                 break;
 
             //shoot
             //p1
             case KeyboardEvent.KEY_M:
+                player1.shoot();
                 break;
             //p2
             case KeyboardEvent.KEY_C:
+                player2.shoot();
                 break;
 
         }

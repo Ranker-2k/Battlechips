@@ -5,9 +5,9 @@ import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 
 public class Grid {
 
-    private static final int BORDER = 10;
-    private int width;
-    private int height;
+    public static final int BORDER = 10;
+    private static int width;
+    private static int height;
     private Rectangle canvas;
 
     public Grid (int width, int height){
@@ -20,11 +20,11 @@ public class Grid {
         canvas.setColor(Color.WHITE);
     }
 
-    public int getWidth(){
+    public static int getWidth(){
         return width;
     }
 
-    public int getHeight(){
+    public static int getHeight(){
         return height;
     }
 }

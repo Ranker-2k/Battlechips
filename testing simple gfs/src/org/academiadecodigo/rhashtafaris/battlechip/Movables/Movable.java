@@ -7,7 +7,7 @@ public interface Movable {
 
 
 
-    void move(Directions direction,int distance);
+    void move(Directions direction, int distance);
 
     /**
      * sets a direction
