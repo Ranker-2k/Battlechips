@@ -1,8 +1,8 @@
-package Movables;
+package org.academiadecodigo.rhashtafaris.battlechip.Movables;
 
-import GridPos.CollisionDetector;
-import GridPos.Directions;
-import GridPos.Position;
+import org.academiadecodigo.rhashtafaris.battlechip.GridPos.CollisionDetector;
+import org.academiadecodigo.rhashtafaris.battlechip.GridPos.Directions;
+import org.academiadecodigo.rhashtafaris.battlechip.GridPos.Position;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 

@@ -1,6 +1,8 @@
-import GridPos.CollisionDetector;
-import GridPos.Grid;
-import Movables.Tank;
+package org.academiadecodigo.rhashtafaris.battlechip;
+
+import org.academiadecodigo.rhashtafaris.battlechip.GridPos.CollisionDetector;
+import org.academiadecodigo.rhashtafaris.battlechip.GridPos.Grid;
+import org.academiadecodigo.rhashtafaris.battlechip.Movables.Tank;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;

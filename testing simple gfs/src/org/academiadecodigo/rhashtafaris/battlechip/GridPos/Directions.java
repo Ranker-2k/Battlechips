@@ -1,4 +1,4 @@
-package GridPos;
+package org.academiadecodigo.rhashtafaris.battlechip.GridPos;
 
 public enum Directions {
     UP,

@@ -1,7 +1,7 @@
-package Movables;
+package org.academiadecodigo.rhashtafaris.battlechip.Movables;
 
-import GridPos.Directions;
-import GridPos.Position;
+import org.academiadecodigo.rhashtafaris.battlechip.GridPos.Directions;
+import org.academiadecodigo.rhashtafaris.battlechip.GridPos.Position;
 
 public interface Movable {
 

@@ -1,6 +1,6 @@
-package GridPos;
+package org.academiadecodigo.rhashtafaris.battlechip.GridPos;
 
-import Movables.Movable;
+import org.academiadecodigo.rhashtafaris.battlechip.Movables.Movable;
 
 public class CollisionDetector {
 

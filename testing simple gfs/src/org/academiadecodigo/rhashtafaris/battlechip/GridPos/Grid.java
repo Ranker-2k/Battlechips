@@ -1,4 +1,4 @@
-package GridPos;
+package org.academiadecodigo.rhashtafaris.battlechip.GridPos;
 
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
