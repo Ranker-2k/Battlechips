@@ -11,29 +11,31 @@ public class Position {
     private int yHeight;
     private Rectangle tankRectangle;
 
-    public Position(int x, int y){
-       this.xWidth = x;
-       this.yHeight = y;
+    public Position(int x, int y) {
+        this.xWidth = x;
+        this.yHeight = y;
 
-       spawn();
+        show();
     }
 
-    private void spawn(){
-        tankRectangle = new Rectangle(xWidth,yHeight,50,50);
+    private void show() {
+        tankRectangle = new Rectangle(xWidth, yHeight, 50, 50);
 
         tankRectangle.setColor(Color.BLUE);
         tankRectangle.draw();
         tankRectangle.fill();
+
     }
 
-    public int getxWidth(){
+    public int getxWidth() {
         return xWidth;
     }
 
-    public int getyHeight(){
+    public int getyHeight() {
         return yHeight;
     }
-    public void setPos(int x, int y){
+
+    public void setPos(int x, int y) {
         this.xWidth = x;
         this.yHeight = y;
     }
@@ -41,20 +43,17 @@ public class Position {
     /**
      * visual position
      */
-    public void convertPosition(){
-
+    public void convertPosition() {
         int transX = xWidth - tankRectangle.getX();
         int transY = yHeight - tankRectangle.getY();
-        tankRectangle.translate(transX,transY);
 
+        tankRectangle.translate(transX, transY);
     }
 
     /**
      * logical position
-     * @param distanceX
-     * @param distanceY
      */
-    public void movePosition (Directions direction, int distance){
+    public void movePosition(Directions direction, int distance) {
 
         switch (direction) {
 
@@ -71,50 +70,47 @@ public class Position {
                 moveRight(distance);
                 break;
         }
-
     }
 
-    private void moveUp(int distance){
-        if (yHeight - distance < Grid.BORDER){
-            setPos(getxWidth(),Grid.BORDER);
+    private void moveUp(int distance) {
+        if (yHeight - distance < Grid.BORDER) {
+            setPos(getxWidth(), Grid.BORDER);
             return;
         }
-        theMove(0, -distance);
+        setMove(0, -distance);
     }
 
-    private void moveDown(int distance){
-        if (yHeight + distance >= Grid.getHeight() - Grid.BORDER){
-            setPos(getxWidth(),Grid.getHeight() - Grid.BORDER);
+    private void moveDown(int distance) {
+        if (yHeight + distance >= Grid.getHeight() - Grid.BORDER) {
+            setPos(getxWidth(), Grid.getHeight() - Grid.BORDER);
             return;
         }
-        theMove(0, distance);
+        setMove(0, distance);
     }
 
-    private void moveLeft(int distance){
-        if (xWidth - distance < Grid.BORDER){
-            setPos(Grid.BORDER,getyHeight());
+    private void moveLeft(int distance) {
+        if (xWidth - distance < Grid.BORDER) {
+            setPos(Grid.BORDER, getyHeight());
             return;
         }
-        theMove(-distance, 0);
+        setMove(-distance, 0);
     }
 
-    private void moveRight(int distance){
-        if (xWidth + distance >= Grid.getWidth() - Grid.BORDER){
-            setPos(Grid.getWidth() - Grid.BORDER,getyHeight());
+    private void moveRight(int distance) {
+        if (xWidth + distance >= Grid.getWidth() - Grid.BORDER) {
+            setPos(Grid.getWidth() - Grid.BORDER, getyHeight());
             return;
         }
-        theMove(distance, 0);
+        setMove(distance, 0);
     }
 
-    private void theMove(int distanceX, int distanceY){
+    private void setMove(int distanceX, int distanceY) {
         this.xWidth += distanceX;
         this.yHeight += distanceY;
     }
 
-
-
-
-    public boolean equals(Movable movable){
+    public boolean equals(Movable movable) {
         return false;
     }
+
 }

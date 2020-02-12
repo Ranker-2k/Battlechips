@@ -25,22 +25,21 @@ public class Game implements KeyboardHandler {
 
     }
 
-    public void init(){
+    public void init() {
 
         collisionDetector = new CollisionDetector(canvas);
         keyboardInit();
-        canvas = new Grid(1280,720);
-        player1 = new Tank(20,20,300,collisionDetector);
-        player2 = new Tank(20,20,500,collisionDetector);
+        canvas = new Grid(1280, 720);
+        player1 = new Tank(20, 20, 300, collisionDetector);
+        player2 = new Tank(20, 20, 500, collisionDetector);
 
     }
 
-    public void start() throws InterruptedException{
+    public void start() throws InterruptedException {
 
         init();
-        while (true){
 
-
+        while (true) {
 
             player1.getPosition().convertPosition();
             player2.getPosition().convertPosition();
@@ -49,7 +48,7 @@ public class Game implements KeyboardHandler {
 
     }
 
-    public void keyboardInit() {
+    private void keyboardInit() {
 
         Keyboard keyboard = new Keyboard(this);
 
@@ -120,7 +119,6 @@ public class Game implements KeyboardHandler {
         shootP2.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         keyboard.addEventListener(shootP2);
 
-
     }
 
     @Override
@@ -128,59 +126,47 @@ public class Game implements KeyboardHandler {
 
         switch (keyboardEvent.getKey()) {
 
-            //up
-            //p1
             case KeyboardEvent.KEY_UP:
                 player1.move(Directions.UP, DISTANCE);
 
                 break;
-            //p2
+
             case KeyboardEvent.KEY_W:
                 player2.move(Directions.UP, DISTANCE);
                 break;
 
-            //down
-            //p1
             case KeyboardEvent.KEY_DOWN:
                 player1.move(Directions.DOWN, DISTANCE);
                 break;
-            //p2
+
             case KeyboardEvent.KEY_S:
                 player2.move(Directions.DOWN, DISTANCE);
                 break;
 
-            //left
-            //p1
             case KeyboardEvent.KEY_LEFT:
                 player1.move(Directions.LEFT, DISTANCE);
                 break;
-            //p2
+
             case KeyboardEvent.KEY_A:
                 player2.move(Directions.LEFT, DISTANCE);
                 break;
 
-            //right
-            //p1
             case KeyboardEvent.KEY_RIGHT:
                 player1.move(Directions.RIGHT, DISTANCE);
                 break;
-            //p2
+
             case KeyboardEvent.KEY_D:
                 player2.move(Directions.RIGHT, DISTANCE);
                 break;
 
-            //shoot
-            //p1
             case KeyboardEvent.KEY_M:
                 player1.shoot();
                 break;
-            //p2
+
             case KeyboardEvent.KEY_C:
                 player2.shoot();
                 break;
-
         }
-
     }
 
     @Override

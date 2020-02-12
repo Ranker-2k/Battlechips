@@ -19,15 +19,13 @@ public class Tank implements Movable {
             int maxAmmo,
             int posInitY,
             int posInitX,
-            CollisionDetector collisionDetector
-    ) {
+            CollisionDetector collisionDetector) {
 
         position = new Position(posInitX,posInitY);
 
         this.ammo = new Bullet[maxAmmo];
         this.collisionDetector = collisionDetector;
         this.destroyed = false;
-
 
     }
 
@@ -47,13 +45,8 @@ public class Tank implements Movable {
 
     @Override
     public void move(Directions direction, int distance) {
-
-
         position.movePosition(direction,distance);
-
     }
-
-
 
     @Override
     public void setDirection() {
