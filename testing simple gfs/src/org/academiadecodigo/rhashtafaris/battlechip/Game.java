@@ -3,6 +3,8 @@ package org.academiadecodigo.rhashtafaris.battlechip;
 import org.academiadecodigo.rhashtafaris.battlechip.GridPos.CollisionDetector;
 import org.academiadecodigo.rhashtafaris.battlechip.GridPos.Directions;
 import org.academiadecodigo.rhashtafaris.battlechip.GridPos.Grid;
+import org.academiadecodigo.rhashtafaris.battlechip.Movables.Bullet;
+import org.academiadecodigo.rhashtafaris.battlechip.Movables.Graphics;
 import org.academiadecodigo.rhashtafaris.battlechip.Movables.Tank;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
@@ -29,9 +31,9 @@ public class Game implements KeyboardHandler {
 
         collisionDetector = new CollisionDetector(canvas);
         keyboardInit();
-        canvas = new Grid(1280, 720);
-        player1 = new Tank(20, 20, 300, collisionDetector);
-        player2 = new Tank(20, 20, 500, collisionDetector);
+        canvas = new Grid();
+        player1 = new Tank(20, 20, 500, collisionDetector,Directions.LEFT, Graphics.PLAYER1);
+        player2 = new Tank(20, 20, 300, collisionDetector,Directions.RIGHT, Graphics.PLAYER2);
 
     }
 
@@ -43,6 +45,22 @@ public class Game implements KeyboardHandler {
 
             player1.getPosition().convertPosition();
             player2.getPosition().convertPosition();
+
+            for (Bullet bullet: player1.getAmmo()) {
+                if (bullet == null){
+                    continue;
+                }
+                bullet.move(bullet.getPosition().getDirection(),5);
+                bullet.getPosition().convertPosition();
+            }
+
+            for (Bullet bullet: player2.getAmmo()) {
+                if (bullet == null){
+                    continue;
+                }
+                bullet.move(bullet.getPosition().getDirection(),5);
+                bullet.getPosition().convertPosition();
+            }
 
         }
 

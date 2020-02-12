@@ -1,34 +1,41 @@
 package org.academiadecodigo.rhashtafaris.battlechip.GridPos;
 
+import org.academiadecodigo.rhashtafaris.battlechip.Movables.Graphics;
 import org.academiadecodigo.rhashtafaris.battlechip.Movables.Movable;
-import org.academiadecodigo.simplegraphics.graphics.Color;
-import org.academiadecodigo.simplegraphics.graphics.Rectangle;
+import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 
 public class Position {
 
     private int xWidth;
     private int yHeight;
-    private Rectangle tankRectangle;
+    private Picture graphic;
+    private Directions direction;
+    private Graphics graphicType;
 
-    public Position(int x, int y) {
+    public Position(int x, int y,Directions initialDirection, Graphics graphicType) {
         this.xWidth = x;
         this.yHeight = y;
-
-        show();
+        this.graphicType = graphicType;
+        this.direction = initialDirection;
+        this.graphic = new Picture(xWidth,yHeight, this.graphicType.getGraphic(this.direction));
+        this.graphic.draw();
     }
 
-    private void show() {
-        tankRectangle = new Rectangle(xWidth, yHeight, 50, 50);
+    private void show(Directions direction) {
+        graphic.load(graphicType.getGraphic(direction));
+        graphic.draw();
+    }
 
-        tankRectangle.setColor(Color.BLUE);
-        tankRectangle.draw();
-        tankRectangle.fill();
-
+    private void hide(){
     }
 
     public int getxWidth() {
         return xWidth;
+    }
+
+    public Directions getDirection(){
+        return direction;
     }
 
     public int getyHeight() {
@@ -44,10 +51,11 @@ public class Position {
      * visual position
      */
     public void convertPosition() {
-        int transX = xWidth - tankRectangle.getX();
-        int transY = yHeight - tankRectangle.getY();
+        int transX = xWidth - graphic.getX();
+        int transY = yHeight - graphic.getY();
 
-        tankRectangle.translate(transX, transY);
+        show(this.direction);
+        graphic.translate(transX, transY);
     }
 
     /**
@@ -56,7 +64,6 @@ public class Position {
     public void movePosition(Directions direction, int distance) {
 
         switch (direction) {
-
             case UP:
                 moveUp(distance);
                 break;
@@ -73,6 +80,8 @@ public class Position {
     }
 
     private void moveUp(int distance) {
+        this.direction = Directions.UP;
+
         if (yHeight - distance < Grid.BORDER) {
             setPos(getxWidth(), Grid.BORDER);
             return;
@@ -81,14 +90,18 @@ public class Position {
     }
 
     private void moveDown(int distance) {
-        if (yHeight + distance >= Grid.getHeight() - Grid.BORDER) {
-            setPos(getxWidth(), Grid.getHeight() - Grid.BORDER);
+        this.direction = Directions.DOWN;
+
+        if (yHeight + distance >= Grid.getHeight() - Grid.BORDER - this.graphic.getHeight()) {
+            setPos(getxWidth(), Grid.getHeight() - Grid.BORDER - this.graphic.getHeight());
             return;
         }
         setMove(0, distance);
     }
 
     private void moveLeft(int distance) {
+        this.direction = Directions.LEFT;
+
         if (xWidth - distance < Grid.BORDER) {
             setPos(Grid.BORDER, getyHeight());
             return;
@@ -97,8 +110,10 @@ public class Position {
     }
 
     private void moveRight(int distance) {
-        if (xWidth + distance >= Grid.getWidth() - Grid.BORDER) {
-            setPos(Grid.getWidth() - Grid.BORDER, getyHeight());
+        this.direction = Directions.RIGHT;
+
+        if (xWidth + distance >= Grid.getWidth() - Grid.BORDER - this.graphic.getWidth()) {
+            setPos(Grid.getWidth() - Grid.BORDER - this.graphic.getWidth(), getyHeight());
             return;
         }
         setMove(distance, 0);

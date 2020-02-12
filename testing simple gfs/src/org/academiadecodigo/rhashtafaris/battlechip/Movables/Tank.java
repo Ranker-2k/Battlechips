@@ -11,7 +11,6 @@ public class Tank implements Movable {
     private int health;
     private Bullet[] ammo;
     private Position position;
-    private Directions direction;
     private CollisionDetector collisionDetector;
     private boolean destroyed;
 
@@ -19,9 +18,10 @@ public class Tank implements Movable {
             int maxAmmo,
             int posInitY,
             int posInitX,
-            CollisionDetector collisionDetector) {
+            CollisionDetector collisionDetector,
+            Directions direction, Graphics graphic) {
 
-        position = new Position(posInitX,posInitY);
+        position = new Position(posInitX,posInitY,direction, graphic);
 
         this.ammo = new Bullet[maxAmmo];
         this.collisionDetector = collisionDetector;
@@ -29,8 +29,19 @@ public class Tank implements Movable {
 
     }
 
+    public Bullet[] getAmmo(){
+        return ammo;
+    }
+
     public void shoot() {
 
+
+        for (int i = 0; i < ammo.length; i++) {
+            if (ammo[i] == null) {
+                ammo[i] = new Bullet(this.collisionDetector, this.position.getxWidth(), this.position.getyHeight(), this.position.getDirection());
+                return;
+            }
+        }
     }
 
     public void beHit(int damage) {
@@ -46,26 +57,6 @@ public class Tank implements Movable {
     @Override
     public void move(Directions direction, int distance) {
         position.movePosition(direction,distance);
-    }
-
-    @Override
-    public void setDirection() {
-
-    }
-
-    @Override
-    public boolean isHittingLimits() {
-        return false;
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
-    @Override
-    public void show() {
-
     }
 
     @Override
