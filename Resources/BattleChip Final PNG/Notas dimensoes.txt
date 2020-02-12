@@ -1,9 +1,0 @@
-Dimensão da tela: 800 * 600
-Nº Colunas: 40 | CellSize: 20 px
-Nº Linhas: 30 | CellSize: 20 px
-
-Dimensão dos chips:
-60px = 3 position grid
-
-Dimensão das bullets:
-16px * 20px
