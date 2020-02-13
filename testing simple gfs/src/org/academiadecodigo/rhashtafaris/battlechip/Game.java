@@ -5,6 +5,7 @@ import org.academiadecodigo.rhashtafaris.battlechip.GridPos.Directions;
 import org.academiadecodigo.rhashtafaris.battlechip.GridPos.Grid;
 import org.academiadecodigo.rhashtafaris.battlechip.Movables.Bullet;
 import org.academiadecodigo.rhashtafaris.battlechip.Movables.Graphics;
+import org.academiadecodigo.rhashtafaris.battlechip.Movables.Movable;
 import org.academiadecodigo.rhashtafaris.battlechip.Movables.Tank;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
@@ -20,6 +21,7 @@ public class Game implements KeyboardHandler {
     private int delay;
     private static final int DISTANCE = 40;
     private CollisionDetector collisionDetector;
+    private Movable[] allMovables;
 
     public Game(int delay) {
 
@@ -29,11 +31,25 @@ public class Game implements KeyboardHandler {
 
     public void init() {
 
-        collisionDetector = new CollisionDetector(canvas);
         keyboardInit();
         canvas = new Grid();
-        player1 = new Tank(20, 20, 500, collisionDetector,Directions.LEFT, Graphics.PLAYER1);
-        player2 = new Tank(20, 20, 300, collisionDetector,Directions.RIGHT, Graphics.PLAYER2);
+        player1 = new Tank(20, 20, 500, collisionDetector, Directions.LEFT, Graphics.PLAYER1);
+        player2 = new Tank(20, 20, 300, collisionDetector, Directions.RIGHT, Graphics.PLAYER2);
+        allMovables = new Movable[player1.getAmmo().length + player2.getAmmo().length + 2];
+        int a = 2;
+        allMovables[0] = player1;
+        allMovables[1] = player2;
+
+        for (int i = 0; i < player1.getAmmo().length; i++){
+           allMovables[a] = player1.getAmmo()[i];
+           a++;
+        }
+        for (int j = 0; j < player2.getAmmo().length; j++ ){
+            allMovables[a] = player2.getAmmo()[j];
+            a++;
+        }
+        collisionDetector = new CollisionDetector(canvas,allMovables);
+
 
     }
 
@@ -45,25 +61,25 @@ public class Game implements KeyboardHandler {
 
             player1.getPosition().convertPosition();
             player2.getPosition().convertPosition();
-
-            for (Bullet bullet: player1.getAmmo()) {
-                if (bullet == null){
-                    continue;
-                }
-                bullet.move(bullet.getPosition().getDirection(),5);
-                bullet.getPosition().convertPosition();
-            }
-
-            for (Bullet bullet: player2.getAmmo()) {
-                if (bullet == null){
-                    continue;
-                }
-                bullet.move(bullet.getPosition().getDirection(),5);
-                bullet.getPosition().convertPosition();
-            }
+            bulletRefresh(player1);
+            bulletRefresh(player2);
 
         }
+    }
 
+    private void bulletRefresh(Tank tank){
+
+        for (int i = 0; i < tank.getAmmo().length; i++){
+            if (tank.getAmmo()[i] == null) {
+                continue;
+            }
+            tank.getAmmo()[i].move(tank.getAmmo()[i].getPosition().getDirection(), 5);
+            tank.getAmmo()[i].getPosition().convertPosition();
+            if (tank.getAmmo()[i].getPosition().hittingWall()) {
+                tank.getAmmo()[i].getPosition().killGraphic();
+                tank.getAmmo()[i]=null;
+            }
+        }
     }
 
     private void keyboardInit() {

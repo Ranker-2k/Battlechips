@@ -28,6 +28,7 @@ public class Position {
     }
 
     private void hide(){
+
     }
 
     public int getxWidth() {
@@ -126,6 +127,17 @@ public class Position {
 
     public boolean equals(Movable movable) {
         return false;
+    }
+
+    public boolean hittingWall(){
+        return (this.getxWidth() == Grid.getWidth()-Grid.BORDER - this.graphic.getWidth() ||
+                this.getxWidth() == Grid.BORDER ||
+                this.getyHeight() == Grid.getHeight()-Grid.BORDER - this.graphic.getHeight() ||
+                this.getyHeight() == Grid.BORDER);
+    }
+
+    public void killGraphic(){
+        this.graphic.delete();
     }
 
 }

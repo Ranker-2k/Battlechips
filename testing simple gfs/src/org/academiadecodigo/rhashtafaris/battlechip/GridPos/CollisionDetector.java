@@ -7,15 +7,14 @@ public class CollisionDetector {
     private Grid grid;
     private Movable[] movables;
 
-    public CollisionDetector(Grid grid){
+    public CollisionDetector(Grid grid, Movable[] movables){
         this.grid = grid;
+        this.movables = movables;
     }
 
-    public void check(Movable movable){
+    public boolean checkIfColision(){
+        return false;
 
-        for (Movable mov : movables) {
-
-        }
     }
 
 }

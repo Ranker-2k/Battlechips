@@ -38,7 +38,10 @@ public class Tank implements Movable {
 
         for (int i = 0; i < ammo.length; i++) {
             if (ammo[i] == null) {
-                ammo[i] = new Bullet(this.collisionDetector, this.position.getxWidth(), this.position.getyHeight(), this.position.getDirection());
+                ammo[i] = new Bullet(this.collisionDetector,
+                        this.position.getxWidth(),
+                        this.position.getyHeight(),
+                        this.position.getDirection());
                 return;
             }
         }
