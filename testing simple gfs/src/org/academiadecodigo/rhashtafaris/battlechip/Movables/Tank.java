@@ -47,6 +47,10 @@ public class Tank implements Movable {
         return bulletArray;
     }
 
+    public int getMemory(){
+        return this.memory;
+    }
+
     public boolean isDestroyed() {
         return destroyed;
     }

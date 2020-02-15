@@ -8,6 +8,7 @@ import org.academiadecodigo.rhashtafaris.battlechip.Movables.Bullet;
 import org.academiadecodigo.rhashtafaris.battlechip.Movables.Graphics;
 import org.academiadecodigo.rhashtafaris.battlechip.Movables.Movable;
 import org.academiadecodigo.rhashtafaris.battlechip.Movables.Tank;
+import org.academiadecodigo.rhashtafaris.battlechip.Pickables.FreeMemory;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
@@ -95,6 +96,10 @@ public class Game {
         collisionDetector.tankCollisionCheck(player1,player2);
         player2.movePosition(DISTANCE);
         collisionDetector.collisionCheck(player2,player1);
+    }
+
+    private FreeMemory throwPickable (){
+        return new FreeMemory();
     }
 
     public Tank getPlayer1() {
