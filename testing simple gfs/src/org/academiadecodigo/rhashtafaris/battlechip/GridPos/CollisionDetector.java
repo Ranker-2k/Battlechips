@@ -1,20 +1,44 @@
 package org.academiadecodigo.rhashtafaris.battlechip.GridPos;
 
-import org.academiadecodigo.rhashtafaris.battlechip.Movables.Movable;
+import org.academiadecodigo.rhashtafaris.battlechip.Game;
+import org.academiadecodigo.rhashtafaris.battlechip.Movables.Bullet;
 
 public class CollisionDetector {
 
-    private Grid grid;
-    private Movable[] movables;
+    private Game game;
 
-    public CollisionDetector(Grid grid, Movable[] movables){
-        this.grid = grid;
-        this.movables = movables;
+    public CollisionDetector(Game game) {
+        this.game = game;
     }
 
-    public boolean checkIfColision(){
-        return false;
+    public void checkCollisionsPlayer1() {
 
+
+
+        Bullet[] bulletArray = game.getPlayer2().getBulletArray();
+
+        for (int i = 0; i < bulletArray.length; i++) {
+            if (bulletArray[i] == null) {
+                continue;
+            }
+            if (bulletArray[i].isVisible()) {
+                bulletArray[i].checkHits(game.getPlayer2());
+            }
+        }
     }
 
+    public void checkCollisionsPlayer2() {
+
+        Bullet[] bulletArray = game.getPlayer1().getBulletArray();
+
+        for (int i = 0; i < bulletArray.length; i++) {
+            if (bulletArray[i] == null) {
+                continue;
+            }
+            if (bulletArray[i].isVisible()) {
+                bulletArray[i].checkHits(game.getPlayer1());
+            }
+        }
+    }
 }
+

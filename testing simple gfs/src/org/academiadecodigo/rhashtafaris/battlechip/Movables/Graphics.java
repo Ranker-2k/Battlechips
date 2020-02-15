@@ -23,6 +23,7 @@ public enum Graphics {
     }
 
     private String graphP1(Directions directions) {
+
         switch (directions) {
             case UP:
                 return "chip1up.png";

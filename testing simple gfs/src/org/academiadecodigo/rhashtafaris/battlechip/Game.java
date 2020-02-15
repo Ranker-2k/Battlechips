@@ -13,199 +13,65 @@ import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
 
-public class Game implements KeyboardHandler {
+public class Game {
 
-    private Grid canvas;
+    private static final int DISTANCE = 20;
+    private static final int DELAY = 20;
+
     private Tank player1;
     private Tank player2;
-    private int delay;
-    private static final int DISTANCE = 40;
+
+
     private CollisionDetector collisionDetector;
-    private Movable[] allMovables;
+    private KeyboardController keyboard;
 
-    public Game(int delay) {
+    Game() {
 
-        this.delay = delay;
-
-    }
-
-    public void init() {
-
-        keyboardInit();
-        canvas = new Grid();
-        player1 = new Tank(20, 20, 500, collisionDetector, Directions.LEFT, Graphics.PLAYER1);
-        player2 = new Tank(20, 20, 300, collisionDetector, Directions.RIGHT, Graphics.PLAYER2);
-        allMovables = new Movable[player1.getAmmo().length + player2.getAmmo().length + 2];
-        int a = 2;
-        allMovables[0] = player1;
-        allMovables[1] = player2;
-
-        for (int i = 0; i < player1.getAmmo().length; i++){
-           allMovables[a] = player1.getAmmo()[i];
-           a++;
-        }
-        for (int j = 0; j < player2.getAmmo().length; j++ ){
-            allMovables[a] = player2.getAmmo()[j];
-            a++;
-        }
-        collisionDetector = new CollisionDetector(canvas,allMovables);
-
+        this.keyboard = new KeyboardController(this);
 
     }
 
-    public void start() throws InterruptedException {
+    private void init() {
+
+        this.keyboard.keyboardInit();
+
+        Grid canvas = new Grid();
+        this.collisionDetector = new CollisionDetector(this);
+
+        player1 = new Tank(360, 1000, collisionDetector, Directions.LEFT, Graphics.PLAYER1);
+        player2 = new Tank(360, 50, collisionDetector, Directions.RIGHT, Graphics.PLAYER2);
+
+    }
+
+    void start() {
 
         init();
 
-        while (true) {
+        try {
 
-            player1.getPosition().convertPosition();
-            player2.getPosition().convertPosition();
-            bulletRefresh(player1);
-            bulletRefresh(player2);
+            while (true) {
 
-        }
-    }
+                Thread.sleep(DELAY);
 
-    private void bulletRefresh(Tank tank){
-
-        for (int i = 0; i < tank.getAmmo().length; i++){
-            if (tank.getAmmo()[i] == null) {
-                continue;
+                player1.bulletRefresh(DISTANCE);
+                player2.bulletRefresh(DISTANCE);
+                player1.movePosition(DISTANCE);
+                player2.movePosition(DISTANCE);
+                this.collisionDetector.checkCollisionsPlayer1();
+                this.collisionDetector.checkCollisionsPlayer2();
             }
-            tank.getAmmo()[i].move(tank.getAmmo()[i].getPosition().getDirection(), 5);
-            tank.getAmmo()[i].getPosition().convertPosition();
-            if (tank.getAmmo()[i].getPosition().hittingWall()) {
-                tank.getAmmo()[i].getPosition().killGraphic();
-                tank.getAmmo()[i]=null;
-            }
+
+        } catch (InterruptedException exception) {
+            exception.printStackTrace();
         }
     }
 
-    private void keyboardInit() {
-
-        Keyboard keyboard = new Keyboard(this);
-
-        /**
-         * Player one keys
-         */
-        //Right - right
-        KeyboardEvent rightPressP1 = new KeyboardEvent();
-        rightPressP1.setKey(KeyboardEvent.KEY_RIGHT);
-        rightPressP1.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
-        keyboard.addEventListener(rightPressP1);
-
-        //Left - left
-        KeyboardEvent leftPressP1 = new KeyboardEvent();
-        leftPressP1.setKey(KeyboardEvent.KEY_LEFT);
-        leftPressP1.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
-        keyboard.addEventListener(leftPressP1);
-
-        //Up - up
-        KeyboardEvent upPressP1 = new KeyboardEvent();
-        upPressP1.setKey(KeyboardEvent.KEY_UP);
-        upPressP1.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
-        keyboard.addEventListener(upPressP1);
-
-        //Down - down
-        KeyboardEvent downPressP1 = new KeyboardEvent();
-        downPressP1.setKey(KeyboardEvent.KEY_DOWN);
-        downPressP1.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
-        keyboard.addEventListener(downPressP1);
-
-        //Shoot - m
-        KeyboardEvent shootP1 = new KeyboardEvent();
-        shootP1.setKey(KeyboardEvent.KEY_M);
-        shootP1.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
-        keyboard.addEventListener(shootP1);
-
-
-        /**
-         * Player two keys
-         */
-        //Right - d
-        KeyboardEvent rightPressP2 = new KeyboardEvent();
-        rightPressP2.setKey(KeyboardEvent.KEY_D);
-        rightPressP2.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
-        keyboard.addEventListener(rightPressP2);
-
-        //Left - a
-        KeyboardEvent leftPressP2 = new KeyboardEvent();
-        leftPressP2.setKey(KeyboardEvent.KEY_A);
-        leftPressP2.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
-        keyboard.addEventListener(leftPressP2);
-
-        //Up - w
-        KeyboardEvent upPressP2 = new KeyboardEvent();
-        upPressP2.setKey(KeyboardEvent.KEY_W);
-        upPressP2.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
-        keyboard.addEventListener(upPressP2);
-
-        //Down - s
-        KeyboardEvent downPressP2 = new KeyboardEvent();
-        downPressP2.setKey(KeyboardEvent.KEY_S);
-        downPressP2.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
-        keyboard.addEventListener(downPressP2);
-
-        //Shoot - c
-        KeyboardEvent shootP2 = new KeyboardEvent();
-        shootP2.setKey(KeyboardEvent.KEY_C);
-        shootP2.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
-        keyboard.addEventListener(shootP2);
-
+    public Tank getPlayer1() {
+        return this.player1;
     }
 
-    @Override
-    public void keyPressed(KeyboardEvent keyboardEvent) {
-
-        switch (keyboardEvent.getKey()) {
-
-            case KeyboardEvent.KEY_UP:
-                player1.move(Directions.UP, DISTANCE);
-
-                break;
-
-            case KeyboardEvent.KEY_W:
-                player2.move(Directions.UP, DISTANCE);
-                break;
-
-            case KeyboardEvent.KEY_DOWN:
-                player1.move(Directions.DOWN, DISTANCE);
-                break;
-
-            case KeyboardEvent.KEY_S:
-                player2.move(Directions.DOWN, DISTANCE);
-                break;
-
-            case KeyboardEvent.KEY_LEFT:
-                player1.move(Directions.LEFT, DISTANCE);
-                break;
-
-            case KeyboardEvent.KEY_A:
-                player2.move(Directions.LEFT, DISTANCE);
-                break;
-
-            case KeyboardEvent.KEY_RIGHT:
-                player1.move(Directions.RIGHT, DISTANCE);
-                break;
-
-            case KeyboardEvent.KEY_D:
-                player2.move(Directions.RIGHT, DISTANCE);
-                break;
-
-            case KeyboardEvent.KEY_M:
-                player1.shoot();
-                break;
-
-            case KeyboardEvent.KEY_C:
-                player2.shoot();
-                break;
-        }
-    }
-
-    @Override
-    public void keyReleased(KeyboardEvent keyboardEvent) {
-
+    public Tank getPlayer2() {
+        return this.player2;
     }
 
 }

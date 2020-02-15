@@ -1,27 +1,24 @@
 package org.academiadecodigo.rhashtafaris.battlechip.GridPos;
 
-import org.academiadecodigo.simplegraphics.graphics.Color;
-import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 public class Grid {
 
     public static final int BORDER = 10;
-    private static int width;
-    private static int height;
-    private static Picture canvasIMG;
+    private static Picture canvas;
 
     public Grid (){
-        canvasIMG = new Picture(0,0,"canvas.png") ;
-        canvasIMG.draw();
+
+        canvas = new Picture(0,0,"canvas.png") ;
+        canvas.draw();
 
     }
 
     public static int getWidth(){
-        return canvasIMG.getWidth();
+        return canvas.getWidth();
     }
 
     public static int getHeight(){
-        return canvasIMG.getHeight();
+        return canvas.getHeight();
     }
 }

@@ -7,8 +7,12 @@ public interface Movable {
 
 
 
-    void move(Directions direction, int distance);
+    void changeDirection(Directions direction);
 
     Position getPosition();
+
+    void movePosition (int distance);
+
+
 
 }

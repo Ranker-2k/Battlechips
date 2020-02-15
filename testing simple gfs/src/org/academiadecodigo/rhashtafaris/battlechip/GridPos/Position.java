@@ -9,39 +9,49 @@ public class Position {
 
     private int xWidth;
     private int yHeight;
-    private Picture graphic;
-    private Directions direction;
     private Graphics graphicType;
+    private Picture image;
+    private Directions graphicDirection;
 
-    public Position(int x, int y,Directions initialDirection, Graphics graphicType) {
+
+    public Position(int x, int y, Directions initialDirection, Graphics graphicType) {
         this.xWidth = x;
         this.yHeight = y;
         this.graphicType = graphicType;
-        this.direction = initialDirection;
-        this.graphic = new Picture(xWidth,yHeight, this.graphicType.getGraphic(this.direction));
-        this.graphic.draw();
+        this.graphicDirection = initialDirection;
+        this.image = new Picture(xWidth, yHeight, this.graphicType.getGraphic(this.graphicDirection));
+        this.image.draw();
+    }
+
+    public Picture getImage(){
+        return this.image;
     }
 
     private void show(Directions direction) {
-        graphic.load(graphicType.getGraphic(direction));
-        graphic.draw();
+        image.load(graphicType.getGraphic(direction));
+        image.draw();
     }
 
-    private void hide(){
-
+    public void hide() {
+        this.image.delete();
     }
 
     public int getxWidth() {
         return xWidth;
     }
 
-    public Directions getDirection(){
-        return direction;
-    }
-
     public int getyHeight() {
         return yHeight;
     }
+
+    public Directions getDirection() {
+        return graphicDirection;
+    }
+
+    public void setGraphicDirection(Directions direction){
+        this.graphicDirection = direction;
+    }
+
 
     public void setPos(int x, int y) {
         this.xWidth = x;
@@ -52,19 +62,18 @@ public class Position {
      * visual position
      */
     public void convertPosition() {
-        int transX = xWidth - graphic.getX();
-        int transY = yHeight - graphic.getY();
+        int transX = xWidth - image.getX();
+        int transY = yHeight - image.getY();
 
-        show(this.direction);
-        graphic.translate(transX, transY);
+        show(this.graphicDirection);
+        image.translate(transX, transY);
     }
 
     /**
      * logical position
      */
-    public void movePosition(Directions direction, int distance) {
-
-        switch (direction) {
+    public void movePosition(int distance, Directions currentDirection) {
+        switch (currentDirection) {
             case UP:
                 moveUp(distance);
                 break;
@@ -74,14 +83,16 @@ public class Position {
             case LEFT:
                 moveLeft(distance);
                 break;
-            default:
+            case RIGHT:
                 moveRight(distance);
                 break;
+            default:
+                return;
         }
     }
 
     private void moveUp(int distance) {
-        this.direction = Directions.UP;
+        this.graphicDirection = Directions.UP;
 
         if (yHeight - distance < Grid.BORDER) {
             setPos(getxWidth(), Grid.BORDER);
@@ -91,17 +102,17 @@ public class Position {
     }
 
     private void moveDown(int distance) {
-        this.direction = Directions.DOWN;
+        this.graphicDirection = Directions.DOWN;
 
-        if (yHeight + distance >= Grid.getHeight() - Grid.BORDER - this.graphic.getHeight()) {
-            setPos(getxWidth(), Grid.getHeight() - Grid.BORDER - this.graphic.getHeight());
+        if (yHeight + distance >= Grid.getHeight() - Grid.BORDER - this.image.getHeight()) {
+            setPos(getxWidth(), Grid.getHeight() - Grid.BORDER - this.image.getHeight());
             return;
         }
         setMove(0, distance);
     }
 
     private void moveLeft(int distance) {
-        this.direction = Directions.LEFT;
+        this.graphicDirection = Directions.LEFT;
 
         if (xWidth - distance < Grid.BORDER) {
             setPos(Grid.BORDER, getyHeight());
@@ -111,10 +122,10 @@ public class Position {
     }
 
     private void moveRight(int distance) {
-        this.direction = Directions.RIGHT;
+        this.graphicDirection = Directions.RIGHT;
 
-        if (xWidth + distance >= Grid.getWidth() - Grid.BORDER - this.graphic.getWidth()) {
-            setPos(Grid.getWidth() - Grid.BORDER - this.graphic.getWidth(), getyHeight());
+        if (xWidth + distance >= Grid.getWidth() - Grid.BORDER - this.image.getWidth()) {
+            setPos(Grid.getWidth() - Grid.BORDER - this.image.getWidth(), getyHeight());
             return;
         }
         setMove(distance, 0);
@@ -125,19 +136,21 @@ public class Position {
         this.yHeight += distanceY;
     }
 
-    public boolean equals(Movable movable) {
-        return false;
-    }
 
-    public boolean hittingWall(){
-        return (this.getxWidth() == Grid.getWidth()-Grid.BORDER - this.graphic.getWidth() ||
+    public boolean hittingWall() {
+        return (this.getxWidth() == Grid.getWidth() - Grid.BORDER - this.image.getWidth() ||
                 this.getxWidth() == Grid.BORDER ||
-                this.getyHeight() == Grid.getHeight()-Grid.BORDER - this.graphic.getHeight() ||
+                this.getyHeight() == Grid.getHeight() - Grid.BORDER - this.image.getHeight() ||
                 this.getyHeight() == Grid.BORDER);
     }
 
-    public void killGraphic(){
-        this.graphic.delete();
+    public boolean equals(Position movable) {
+        return (this.image.getWidth() + this.getxWidth() == movable.getxWidth() ||
+                this.getxWidth() == movable.image.getWidth() + movable.getxWidth() ||
+                this.getyHeight() == movable.image.getHeight() + movable.getyHeight() ||
+                this.image.getHeight() + this.getyHeight() == movable.getyHeight());
     }
+
+
 
 }

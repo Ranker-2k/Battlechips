@@ -2,54 +2,38 @@ package org.academiadecodigo.rhashtafaris.battlechip.Movables;
 
 import org.academiadecodigo.rhashtafaris.battlechip.GridPos.CollisionDetector;
 import org.academiadecodigo.rhashtafaris.battlechip.GridPos.Directions;
+import org.academiadecodigo.rhashtafaris.battlechip.GridPos.Grid;
 import org.academiadecodigo.rhashtafaris.battlechip.GridPos.Position;
-import org.academiadecodigo.simplegraphics.graphics.Color;
-import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 
 public class Tank implements Movable {
 
     private int health;
-    private Bullet[] ammo;
+    private Bullet[] bulletArray;
     private Position position;
-    private CollisionDetector collisionDetector;
     private boolean destroyed;
+    private Directions currentDirection;
+    private static final int MAX_AMMO = 10;
 
     public Tank(
-            int maxAmmo,
             int posInitY,
             int posInitX,
             CollisionDetector collisionDetector,
             Directions direction, Graphics graphic) {
 
-        position = new Position(posInitX,posInitY,direction, graphic);
+        position = new Position(posInitX, posInitY, direction, graphic);
 
-        this.ammo = new Bullet[maxAmmo];
-        this.collisionDetector = collisionDetector;
         this.destroyed = false;
+        this.currentDirection = Directions.STILL;
+
+        this.bulletArray = new Bullet[MAX_AMMO];
+        populateBulletArray();
+
+        this.health = 300;
 
     }
 
-    public Bullet[] getAmmo(){
-        return ammo;
-    }
-
-    public void shoot() {
-
-
-        for (int i = 0; i < ammo.length; i++) {
-            if (ammo[i] == null) {
-                ammo[i] = new Bullet(this.collisionDetector,
-                        this.position.getxWidth(),
-                        this.position.getyHeight(),
-                        this.position.getDirection());
-                return;
-            }
-        }
-    }
-
-    public void beHit(int damage) {
-
-
+    public Bullet[] getBulletArray() {
+        return bulletArray;
     }
 
     public boolean isDestroyed() {
@@ -57,14 +41,72 @@ public class Tank implements Movable {
     }
 
 
+    public void die () {
+        if (health <= 0){
+            this.destroyed = true;
+            return;
+        }
+        this.destroyed = false;
+    }
+
+
+    private void populateBulletArray(){
+
+        for (int i = 0; i < this.bulletArray.length; i++){
+            this.bulletArray[i] = new Bullet(Grid.BORDER, Grid.BORDER,Directions.STILL);
+        }
+    }
+
+    public void shoot() {
+
+        for (int i = 0; i < bulletArray.length; i++) {
+            if (bulletArray[i].isVisible()){
+                continue;
+            }
+            bulletArray[i].resetPosition(this.position.getxWidth() + 20,this.position.getyHeight() + 20,this.position.getDirection());
+            return;
+        }
+    }
+
+    //updating visual representation of bullets;
+    public void bulletRefresh(int distance) {
+
+        for (int i = 0; i < this.getBulletArray().length; i++) {
+
+            if (this.getBulletArray()[i] == null) {
+                continue;
+            }
+
+            if (this.bulletArray[i].getPosition().hittingWall()) {
+                this.bulletArray[i].getPosition().hide();
+                this.bulletArray[i].goInvisible();
+            }
+            this.bulletArray[i].movePosition(distance);
+        }
+    }
+
+    public void beHit(int damage) {
+        this.health -= damage;
+        System.out.println(health);
+    }
+
     @Override
-    public void move(Directions direction, int distance) {
-        position.movePosition(direction,distance);
+    public void changeDirection(Directions direction) {
+        this.currentDirection = direction;
     }
 
     @Override
     public Position getPosition() {
         return position;
     }
+
+    @Override
+    public void movePosition(int distance) {
+
+        this.position.movePosition(distance,currentDirection);
+        this.currentDirection = Directions.STILL;
+        this.position.convertPosition();
+    }
+
 }
 
