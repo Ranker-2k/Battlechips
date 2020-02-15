@@ -23,7 +23,7 @@ public class Position {
         this.image.draw();
     }
 
-    public Picture getImage(){
+    public Picture getImage() {
         return this.image;
     }
 
@@ -48,7 +48,7 @@ public class Position {
         return graphicDirection;
     }
 
-    public void setGraphicDirection(Directions direction){
+    public void setGraphicDirection(Directions direction) {
         this.graphicDirection = direction;
     }
 
@@ -136,7 +136,6 @@ public class Position {
         this.yHeight += distanceY;
     }
 
-
     public boolean hittingWall() {
         return (this.getxWidth() == Grid.getWidth() - Grid.BORDER - this.image.getWidth() ||
                 this.getxWidth() == Grid.BORDER ||
@@ -145,12 +144,41 @@ public class Position {
     }
 
     public boolean equals(Position movable) {
-        return (this.image.getWidth() + this.getxWidth() == movable.getxWidth() ||
-                this.getxWidth() == movable.image.getWidth() + movable.getxWidth() ||
-                this.getyHeight() == movable.image.getHeight() + movable.getyHeight() ||
-                this.image.getHeight() + this.getyHeight() == movable.getyHeight());
+        return (checkVerticeUL(movable) ||
+                checkVerticeUR(movable) ||
+                checkVerticeDL(movable) ||
+                checkVerticeDR(movable));
     }
 
+    private boolean checkVerticeUL(Position movable){
+        return (this.image.getX() + this.image.getWidth() >= movable.image.getX() &&
+                this.image.getX() + this.image.getWidth() <= movable.image.getX() + movable.image.getWidth() &&
+                this.image.getY() + this.image.getHeight() >= movable.image.getY() &&
+                this.image.getY() + this.image.getHeight() <= movable.image.getY() + movable.image.getHeight());
+    }
 
+    private boolean checkVerticeUR (Position movable){
+        return (this.image.getX() >= movable.image.getX() &&
+                this.image.getX() <= movable.image.getX() + movable.image.getWidth() &&
+                this.image.getY() + this.image.getHeight() >= movable.image.getY() &&
+                this.image.getY() + this.image.getHeight() <= movable.image.getY() + movable.image.getHeight());
+    }
 
+    private boolean checkVerticeDL (Position movable) {
+        return (this.image.getX() + this.image.getWidth() >= movable.image.getX() &&
+                this.image.getX() + this.image.getWidth() <= movable.image.getX() + movable.image.getWidth() &&
+                this.image.getY() >= movable.image.getY() &&
+                this.image.getY() <= movable.image.getY() + movable.image.getHeight());
+    }
+
+    private boolean checkVerticeDR (Position movable) {
+        return (this.image.getX() >= movable.image.getX() &&
+                this.image.getX() <= movable.image.getX() + movable.image.getWidth() &&
+                this.image.getY() >= movable.image.getY() &&
+                this.image.getY() <= movable.image.getY() + movable.image.getWidth());
+    }
 }
+
+
+
+

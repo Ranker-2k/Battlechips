@@ -1,15 +1,18 @@
 package org.academiadecodigo.rhashtafaris.battlechip.Movables;
 
+import org.academiadecodigo.bootcamp.Sound;
 import org.academiadecodigo.rhashtafaris.battlechip.GridPos.CollisionDetector;
 import org.academiadecodigo.rhashtafaris.battlechip.GridPos.Directions;
 import org.academiadecodigo.rhashtafaris.battlechip.GridPos.Position;
 
 public class Bullet implements Movable {
 
-    private static final int DAMAGE = 50;
+    private static final int DAMAGE = 10;
     private Position position;
     private Directions currentDirection;
     private boolean visible;
+    private Sound hit;
+    private Sound shoot;
 
 
     Bullet(int xWidth, int yHeigth, Directions directions) {
@@ -18,6 +21,8 @@ public class Bullet implements Movable {
         this.currentDirection = directions;
         this.visible = false;
         this.position.hide();
+        hit = new Sound("");
+        shoot = new Sound("");
     }
 
     @Override
@@ -27,7 +32,9 @@ public class Bullet implements Movable {
     }
 
     public void goInvisible() {
+        hit.play(true);
         this.visible = false;
+        this.position.hide();
     }
 
     public boolean isVisible() {
@@ -40,6 +47,7 @@ public class Bullet implements Movable {
 
         currentDirection = directions;
         visible = true;
+        shoot.play(true);
     }
 
     @Override
@@ -56,32 +64,10 @@ public class Bullet implements Movable {
         }
     }
 
-
-    public void checkHits (Tank tank){
-
-        if (this.position.equals(tank.getPosition())){
+    public void checkBulletHits (Tank tank){
+        if (this.position.equals(tank.getPosition())) {
             this.goInvisible();
             tank.beHit(DAMAGE);
         }
     }
-
-    //REVIEW!
-    /*
-    private boolean hittingMovable(Tank tank) {
-
-        return (this.getPosition().getxWidth() >= tank.getPosition().getxWidth() &&
-                this.getPosition().getxWidth() <= tank.getPosition().getxWidth() + 28 &&
-                this.getPosition().getyHeight() >= tank.getPosition().getyHeight() &&
-                this.getPosition().getyHeight() <= tank.getPosition().getyHeight() + 28);
-    }
-
-
-
-    public void hit(Tank tank) {
-
-        if (hittingMovable(tank)) {
-            tank.beHit(this.damage);
-        }
-    }
-    */
 }

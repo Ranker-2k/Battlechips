@@ -2,6 +2,8 @@ package org.academiadecodigo.rhashtafaris.battlechip.GridPos;
 
 import org.academiadecodigo.rhashtafaris.battlechip.Game;
 import org.academiadecodigo.rhashtafaris.battlechip.Movables.Bullet;
+import org.academiadecodigo.rhashtafaris.battlechip.Movables.Movable;
+import org.academiadecodigo.rhashtafaris.battlechip.Movables.Tank;
 
 public class CollisionDetector {
 
@@ -11,34 +13,29 @@ public class CollisionDetector {
         this.game = game;
     }
 
-    public void checkCollisionsPlayer1() {
+    public void collisionCheck(Tank player1, Tank player2) {
 
-
-
-        Bullet[] bulletArray = game.getPlayer2().getBulletArray();
-
-        for (int i = 0; i < bulletArray.length; i++) {
-            if (bulletArray[i] == null) {
+        for (Bullet bulletP2 : player2.getBulletArray()) {
+            if (!bulletP2.isVisible()) {
                 continue;
             }
-            if (bulletArray[i].isVisible()) {
-                bulletArray[i].checkHits(game.getPlayer2());
+            bulletP2.checkBulletHits(player1);
+        }
+
+        for (Bullet bulletP1: player1.getBulletArray()){
+            if (!bulletP1.isVisible()){
+                continue;
             }
+            bulletP1.checkBulletHits(player2);
         }
     }
 
-    public void checkCollisionsPlayer2() {
+    public void tankCollisionCheck (Tank player1, Tank player2){
 
-        Bullet[] bulletArray = game.getPlayer1().getBulletArray();
-
-        for (int i = 0; i < bulletArray.length; i++) {
-            if (bulletArray[i] == null) {
-                continue;
-            }
-            if (bulletArray[i].isVisible()) {
-                bulletArray[i].checkHits(game.getPlayer1());
-            }
+        if (player1.getPosition().equals(player2.getPosition())){
+            player1.collideTank(player2);
         }
     }
+
 }
 

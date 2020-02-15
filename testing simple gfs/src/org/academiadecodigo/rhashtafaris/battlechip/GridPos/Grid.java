@@ -12,6 +12,9 @@ public class Grid {
         canvas = new Picture(0,0,"canvas.png") ;
         canvas.draw();
 
+        Picture canvasAddition = new Picture(0, canvas.getHeight(), "score.png");
+        canvasAddition.draw();
+
     }
 
     public static int getWidth(){
