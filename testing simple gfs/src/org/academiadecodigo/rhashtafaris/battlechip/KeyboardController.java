@@ -132,6 +132,8 @@ public class KeyboardController implements KeyboardHandler {
                 break;
 
             case KeyboardEvent.KEY_C:
+                System.out.println(game);
+                System.out.println(game.getPlayer2());
                 game.getPlayer2().shoot();
                 break;
         }

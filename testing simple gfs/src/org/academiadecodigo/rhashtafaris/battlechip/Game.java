@@ -41,7 +41,7 @@ public class Game {
         Grid canvas = new Grid();
         this.collisionDetector = new CollisionDetector(this);
         this.keyboard.keyboardInit();
-        music = new Sound("gameTheme.wav");
+        music = new Sound(" Resources/sfx/gameTheme.wav");
 
         player1 = new Tank(350, 915, Directions.LEFT, Graphics.PLAYER1, "player1");
         player2 = new Tank(350, 305, Directions.RIGHT, Graphics.PLAYER2, "player2");
@@ -51,8 +51,9 @@ public class Game {
     void start() {
 
         init();
-        music.setLoop(100);
 
+        music.play(true);
+        music.setLoop(1);
 
         try {
 

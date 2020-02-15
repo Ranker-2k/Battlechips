@@ -14,15 +14,14 @@ public class Bullet implements Movable {
     private Sound hit;
     private Sound shoot;
 
-
     Bullet(int xWidth, int yHeigth, Directions directions) {
 
         position = new Position(xWidth + 20, yHeigth + 20, directions, Graphics.BULLET);
         this.currentDirection = directions;
         this.visible = false;
         this.position.hide();
-        hit = new Sound("");
-        shoot = new Sound("");
+        this.hit = new Sound(" Resources/sfx/hit.wav");
+        this.shoot = new Sound(" Resources/sfx/shoot.wav");
     }
 
     @Override

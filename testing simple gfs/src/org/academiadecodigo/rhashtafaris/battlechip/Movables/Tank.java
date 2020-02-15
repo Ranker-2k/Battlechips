@@ -1,5 +1,6 @@
 package org.academiadecodigo.rhashtafaris.battlechip.Movables;
 
+import org.academiadecodigo.bootcamp.Sound;
 import org.academiadecodigo.rhashtafaris.battlechip.GridPos.Directions;
 import org.academiadecodigo.rhashtafaris.battlechip.GridPos.Grid;
 import org.academiadecodigo.rhashtafaris.battlechip.GridPos.Position;
@@ -12,10 +13,14 @@ public class Tank implements Movable {
     private int memory;
     private static final int MAX_MEMORY = 300;
     private Bullet[] bulletArray;
+
     private Position position;
-    private boolean destroyed;
     private Directions currentDirection;
     private Memory memoryGauge;
+
+    private boolean destroyed;
+
+    private Sound collide;
 
 
     public Tank(
@@ -34,6 +39,8 @@ public class Tank implements Movable {
         this.memory = 0;
 
         this.memoryGauge = new Memory(playerID);
+
+        this.collide = new Sound(" Resources/sfx/colide.wav");
 
     }
     public Bullet[] getBulletArray() {
@@ -82,7 +89,7 @@ public class Tank implements Movable {
     public void beHit(int damage) {
 
         this.memory += damage;
-        this.memoryGauge.fillMemory(damage); //review Magic Number!
+        this.memoryGauge.fillMemory(damage);
 
         if (this.memory >= MAX_MEMORY){
             destroyed = true;
@@ -111,6 +118,8 @@ public class Tank implements Movable {
     public void collideTank(Tank tank) {
         tank.position.movePosition(COLLIDE_DISTANCE,this.position.getDirection());
         this.position.movePosition(COLLIDE_DISTANCE,this.position.getDirection().getOppositeDirection());
+
+        this.collide.play(true);
 
         this.beHit(COLLIDE_DAMAGE);
         tank.beHit(COLLIDE_DAMAGE);
