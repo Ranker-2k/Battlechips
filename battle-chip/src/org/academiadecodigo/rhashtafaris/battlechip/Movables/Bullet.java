@@ -41,7 +41,9 @@ public class Bullet implements Movable {
 
     void goInvisible() {
 
+        shoot.stop();
         hit.play(true);
+
         this.visible = false;
         this.position.hide();
     }

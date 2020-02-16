@@ -24,6 +24,7 @@ public class Game {
 
 
     private Sound music;
+    private Sound pickableAppears;
 
     private CollisionDetector collisionDetector;
 
@@ -38,7 +39,10 @@ public class Game {
         Grid canvas = new Grid();
 
         this.collisionDetector = new CollisionDetector(this);
-        music = new Sound(" resources/sfx/gameTheme_4.wav");
+
+        //music = new Sound(" resources/sfx/gameTheme_4.wav");
+
+        this.pickableAppears = new Sound (" resources/sfx/pickAppears.wav");
 
         player1 = new Tank(350, 915, Directions.LEFT, Graphics.PLAYER1, "player1");
         player2 = new Tank(350, 305, Directions.RIGHT, Graphics.PLAYER2, "player2");
@@ -133,9 +137,14 @@ public class Game {
             this.pickAppear = false;
             pickableNumber++;
 
+            this.pickableAppears.play(true);
+
             this.currentPickable = new FreeMemory();
             this.currentPickable.goVisible();
+
         }
+
+        this.pickableAppears.stop();
 
     }
 

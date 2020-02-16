@@ -45,7 +45,7 @@ public class Memory {
 
         if (playerID.equals("player2")){
             this.rectangle.grow(-currentWidth, 0);
-            this.rectangle.translate(-54, 0);
+            this.rectangle.translate(-50, 0);
             currentWidth = 0;
             return;
         }

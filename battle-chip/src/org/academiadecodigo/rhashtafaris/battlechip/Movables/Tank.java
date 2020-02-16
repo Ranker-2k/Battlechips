@@ -80,7 +80,8 @@ public class Tank implements Movable {
             if (bulletTimmer != 0) {
                 return;
             }
-            bulletTimmer = 10;
+
+            bulletTimmer = 5;
 
             bulletArray[i].resetPosition(this.position.getxWidth() + 20, this.position.getyHeight() + 20, this.position.getDirection());
             return;

@@ -1,5 +1,6 @@
 package org.academiadecodigo.rhashtafaris.battlechip;
 
+import org.academiadecodigo.bootcamp.Sound;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 public class Menu {
@@ -8,29 +9,35 @@ public class Menu {
     private boolean gameStart;
     private boolean instructions;
     private boolean offInfo;
+    private Sound music;
 
 
     public Menu() {
         gameStart = false;
         instructions = false;
         offInfo = false;
+        this.music = new Sound(" resources/sfx/gameTheme_4.wav");
     }
 
     public void createMenu() {
         canvasMenu = new Picture(0, 0, "menu.png");
         canvasMenu.draw();
 
+        this.music.play(true);
+
         try {
 
-        while (!gameStart){
+            while (!gameStart) {
 
-            Thread.sleep(200);
+                Thread.sleep(200);
 
-            if (instructions){
-                startInstructions();
+                if (instructions) {
+                    startInstructions();
+                }
             }
-        }
-        }catch (InterruptedException ex){
+            this.music.close();
+
+        } catch (InterruptedException ex) {
             System.out.println("menu rong!!!");
         }
     }
@@ -68,7 +75,7 @@ public class Menu {
         }
     }
 
-    public void instructionsTrue(){
+    public void instructionsTrue() {
         instructions = true;
     }
 }
