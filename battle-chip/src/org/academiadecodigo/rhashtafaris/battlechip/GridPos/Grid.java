@@ -14,7 +14,6 @@ public class Grid {
 
         Picture canvasAddition = new Picture(0, canvas.getHeight(), "resources/score.png");
         canvasAddition.draw();
-
     }
 
     public static int getWidth(){

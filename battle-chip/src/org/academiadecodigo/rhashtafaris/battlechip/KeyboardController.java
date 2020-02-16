@@ -11,15 +11,13 @@ public class KeyboardController implements KeyboardHandler {
     private Game game;
     private Menu menu;
 
-    public void setGame(Game game){
+    void setGame(Game game){
         this.game = game;
     }
 
-    public void setMenu(Menu menu){
+    void setMenu(Menu menu){
         this.menu = menu;
     }
-
-
 
     void keyboardInit() {
 
@@ -119,7 +117,6 @@ public class KeyboardController implements KeyboardHandler {
         shootP2.setKey(KeyboardEvent.KEY_C);
         shootP2.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
         keyboard.addEventListener(shootP2);
-
     }
 
     @Override
@@ -128,56 +125,81 @@ public class KeyboardController implements KeyboardHandler {
         switch (keyboardEvent.getKey()) {
 
             case KeyboardEvent.KEY_UP:
-                game.getPlayer1().changeDirection(Directions.UP);
-
+                if (game != null) {
+                    game.getPlayer1().changeDirection(Directions.UP);
+                }
                 break;
 
             case KeyboardEvent.KEY_W:
-                game.getPlayer2().changeDirection(Directions.UP);
+                if (game != null) {
+                    game.getPlayer2().changeDirection(Directions.UP);
+                }
                 break;
 
             case KeyboardEvent.KEY_DOWN:
-                game.getPlayer1().changeDirection(Directions.DOWN);
+                if (game != null) {
+                    game.getPlayer1().changeDirection(Directions.DOWN);
+                }
                 break;
 
             case KeyboardEvent.KEY_S:
-                game.getPlayer2().changeDirection(Directions.DOWN);
+                if (game != null) {
+                    game.getPlayer2().changeDirection(Directions.DOWN);
+                }
                 break;
 
             case KeyboardEvent.KEY_LEFT:
-                game.getPlayer1().changeDirection(Directions.LEFT);
+                if (game != null) {
+                    game.getPlayer1().changeDirection(Directions.LEFT);
+                }
                 break;
 
             case KeyboardEvent.KEY_A:
-                game.getPlayer2().changeDirection(Directions.LEFT);
+                if (game != null) {
+                    game.getPlayer2().changeDirection(Directions.LEFT);
+                }
                 break;
 
             case KeyboardEvent.KEY_RIGHT:
-                game.getPlayer1().changeDirection(Directions.RIGHT);
+                if (game != null) {
+                    game.getPlayer1().changeDirection(Directions.RIGHT);
+                }
                 break;
 
             case KeyboardEvent.KEY_D:
-                game.getPlayer2().changeDirection(Directions.RIGHT);
+                if (game != null) {
+                    game.getPlayer2().changeDirection(Directions.RIGHT);
+                }
                 break;
 
             case KeyboardEvent.KEY_M:
-                game.getPlayer1().shoot();
+                if (game != null) {
+                    game.getPlayer1().shoot();
+                }
                 break;
 
             case KeyboardEvent.KEY_C:
-                game.getPlayer2().shoot();
+                if (game != null) {
+                    game.getPlayer2().shoot();
+                }
                 break;
 
             case KeyboardEvent.KEY_1:
-                menu.startGame();
+                if (menu != null) {
+                    menu.startGame();
+                }
                 break;
 
             case KeyboardEvent.KEY_2:
-                menu.instructionsTrue();
+                if (menu != null) {
+                    menu.instructionsTrue();
+                }
                 break;
 
             case KeyboardEvent.KEY_B:
-                menu.backMenu();
+                if (menu != null) {
+                    menu.backMenu();
+                }
                 break;
             case KeyboardEvent.KEY_0:
                 if (game != null && game.isGameFinish()) {
@@ -189,7 +211,5 @@ public class KeyboardController implements KeyboardHandler {
 
     @Override
     public void keyReleased(KeyboardEvent keyboardEvent) {
-
     }
-
 }

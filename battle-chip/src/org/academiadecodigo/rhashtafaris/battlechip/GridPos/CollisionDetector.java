@@ -1,20 +1,16 @@
 package org.academiadecodigo.rhashtafaris.battlechip.GridPos;
 
-import org.academiadecodigo.bootcamp.Sound;
 import org.academiadecodigo.rhashtafaris.battlechip.Game;
 import org.academiadecodigo.rhashtafaris.battlechip.Movables.Bullet;
 import org.academiadecodigo.rhashtafaris.battlechip.Movables.Tank;
-import org.academiadecodigo.rhashtafaris.battlechip.Pickables.FreeMemory;
 import org.academiadecodigo.rhashtafaris.battlechip.Pickables.Pickables;
 
 public class CollisionDetector {
 
     private Game game;
-    private Sound catchPickable;
 
     public CollisionDetector(Game game) {
         this.game = game;
-        this.catchPickable = new Sound ("/resources/sfx/getPickable.wav");
     }
 
     public void collisionCheck(Tank player1, Tank player2) {
@@ -51,15 +47,9 @@ public class CollisionDetector {
             if (!pickable.isVisible()) {
                 return;
             }
-
-            this.catchPickable.play(true);
-
             player1.setMemory();
             pickable.goInvisible();
             player1.memoryRefresh();
-
-            this.catchPickable.stop();
-
             return;
         }
 
@@ -68,15 +58,9 @@ public class CollisionDetector {
             if (!pickable.isVisible()) {
                 return;
             }
-
-            this.catchPickable.play(true);
-
             player2.setMemory();
             pickable.goInvisible();
             player2.memoryRefresh();
-
-            this.catchPickable.stop();
-
         }
     }
 }

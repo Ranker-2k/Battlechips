@@ -21,10 +21,6 @@ public class Main {
             keyboard.setGame(game);
             game.start();
             game = null;
-
-
         }
-
-
     }
 }

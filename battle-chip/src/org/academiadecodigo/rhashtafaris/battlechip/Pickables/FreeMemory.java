@@ -8,7 +8,6 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 public class FreeMemory implements Pickables {
 
-    private Picture picture;
     private Position position;
     private Graphics graphicType;
     private static final int INITIAL_RANGE = 20;
@@ -24,15 +23,13 @@ public class FreeMemory implements Pickables {
 
         this.position = new Position(x, y, Directions.STILL, graphicType);
 
-        //Picture picture
-        this.picture = new Picture(x, y, graphicType.getGraphic(Directions.STILL));
+        Picture picture = new Picture(x, y, graphicType.getGraphic(Directions.STILL));
 
     }
 
     public boolean isVisible(){
         return this.visible;
     }
-
 
     @Override
     public void goInvisible() {
@@ -60,5 +57,4 @@ public class FreeMemory implements Pickables {
     public Position getPosition() {
         return this.position;
     }
-
 }

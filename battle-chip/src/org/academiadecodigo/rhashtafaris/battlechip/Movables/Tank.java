@@ -8,22 +8,21 @@ import org.academiadecodigo.rhashtafaris.battlechip.GridPos.Position;
 
 public class Tank implements Movable {
     private static final int MAX_AMMO = 10;
-    private static final int COLLIDE_DISTANCE = 10;
+    private static final int COLLIDE_DISTANCE = 15;
     private static final int COLLIDE_DAMAGE = 3;
+    private static final int MAX_MEMORY = 300;
 
     private int memory;
-    private static final int MAX_MEMORY = 300;
+    private Memory memoryGauge;
+
     private Bullet[] bulletArray;
     private int bulletTimmer;
 
     private Position position;
     private Directions currentDirection;
-    private Memory memoryGauge;
 
     private boolean destroyed;
-
     private Sound collide;
-
 
     public Tank(
             int posInitY,
@@ -44,7 +43,6 @@ public class Tank implements Movable {
         this.memoryGauge = new Memory(playerID);
 
         this.collide = new Sound("/resources/sfx/colide_1.wav");
-
     }
 
     public Bullet[] getBulletArray() {
@@ -64,25 +62,20 @@ public class Tank implements Movable {
     }
 
     private void populateBulletArray() {
-
         for (int i = 0; i < this.bulletArray.length; i++) {
             this.bulletArray[i] = new Bullet(Grid.BORDER, Grid.BORDER, Directions.STILL);
         }
     }
 
     public void shoot() {
-
         for (int i = 0; i < bulletArray.length; i++) {
             if (bulletArray[i].isVisible()) {
                 continue;
             }
-
             if (bulletTimmer != 0) {
                 return;
             }
-
-            bulletTimmer = 5;
-
+            bulletTimmer = 7;
             bulletArray[i].resetPosition(this.position.getxWidth() + 20, this.position.getyHeight() + 20, this.position.getDirection());
             return;
         }
@@ -90,34 +83,27 @@ public class Tank implements Movable {
 
     //updating visual representation of bullets;
     public void bulletRefresh(int distance) {
-
         if (bulletTimmer != 0) {
             bulletTimmer--;
         }
-
         for (int i = 0; i < this.getBulletArray().length; i++) {
-
             if (this.getBulletArray()[i] == null) {
                 continue;
             }
-
             if (this.bulletArray[i].getPosition().hittingWall()) {
                 this.bulletArray[i].getPosition().hide();
                 this.bulletArray[i].goInvisible();
             }
             this.bulletArray[i].movePosition(distance);
         }
-
     }
 
     public void memoryRefresh() {
-
         this.memoryGauge.resetMemoryGauge();
         this.memory = 0;
     }
 
     public void beHit(int damage) {
-
         this.memory += damage;
         this.memoryGauge.fillMemory(damage);
 
@@ -125,7 +111,6 @@ public class Tank implements Movable {
             destroyed = true;
             this.memory = MAX_MEMORY;
         }
-        collide.stop();
     }
 
     @Override
@@ -140,7 +125,6 @@ public class Tank implements Movable {
 
     @Override
     public void movePosition(int distance) {
-
         this.position.movePosition(distance, currentDirection);
         this.currentDirection = Directions.STILL;
         this.position.convertPosition();
@@ -149,12 +133,9 @@ public class Tank implements Movable {
     public void collideTank(Tank tank) {
         tank.position.movePosition(COLLIDE_DISTANCE, this.position.getDirection());
         this.position.movePosition(COLLIDE_DISTANCE, this.position.getDirection().getOppositeDirection());
-
         this.collide.play(true);
-
         this.beHit(COLLIDE_DAMAGE);
         tank.beHit(COLLIDE_DAMAGE);
     }
-
 }
 

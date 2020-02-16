@@ -11,25 +11,20 @@ public class Menu {
     private boolean offInfo;
     private Sound music;
 
-
-    public Menu() {
+    Menu() {
         gameStart = false;
         instructions = false;
         offInfo = false;
         this.music = new Sound("/resources/sfx/gameTheme_4.wav");
     }
 
-    public void createMenu() {
+    void createMenu() {
         canvasMenu = new Picture(0, 0, "resources/menu.png");
         canvasMenu.draw();
-
         this.music.play(true);
 
-
         try {
-
             while (!gameStart) {
-
                 Thread.sleep(200);
 
                 if (instructions) {
@@ -37,6 +32,7 @@ public class Menu {
                 }
             }
             this.music.stop();
+            this.music.close();
 
         } catch (InterruptedException ex) {
             System.out.println("something wrong with the menu.");
@@ -45,38 +41,33 @@ public class Menu {
 
     void startGame() {
         if (!offInfo) {
-
             this.gameStart = true;
         }
     }
 
-    void startInstructions() {
+    private void startInstructions() {
 
         if (!offInfo) {
-
             canvasMenu = new Picture(0, 0, "resources/info.png");
             canvasMenu.draw();
             offInfo = true;
         }
-
     }
 
-    public void backMenu() {
+    void backMenu() {
 
         if (offInfo) {
-
             instructions = false;
             offInfo = false;
 
             if (canvasMenu != null) {
-
                 canvasMenu.delete();
                 canvasMenu = null;
             }
         }
     }
 
-    public void instructionsTrue() {
+    void instructionsTrue() {
         instructions = true;
     }
 }

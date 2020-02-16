@@ -3,7 +3,6 @@ package org.academiadecodigo.rhashtafaris.battlechip.GridPos;
 import org.academiadecodigo.rhashtafaris.battlechip.Graphics;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
-
 public class Position {
 
     private int xWidth;
@@ -11,7 +10,6 @@ public class Position {
     private Graphics graphicType;
     private Picture image;
     private Directions graphicDirection;
-
 
     public Position(int x, int y, Directions initialDirection, Graphics graphicType) {
         this.xWidth = x;
@@ -46,7 +44,6 @@ public class Position {
     public void setGraphicDirection(Directions direction) {
         this.graphicDirection = direction;
     }
-
 
     public void setPos(int x, int y) {
         this.xWidth = x;

@@ -40,10 +40,6 @@ public class Bullet implements Movable {
     }
 
     void goInvisible() {
-
-        shoot.stop();
-        hit.play(true);
-
         this.visible = false;
         this.position.hide();
     }
@@ -54,13 +50,12 @@ public class Bullet implements Movable {
 
         currentDirection = directions;
         visible = true;
-        hit.stop();
+
         shoot.play(true);
     }
 
     @Override
     public void movePosition(int distance) {
-
         if (visible) {
             this.position.movePosition(distance, currentDirection);
             this.position.convertPosition();
@@ -70,6 +65,7 @@ public class Bullet implements Movable {
     public void checkBulletHits (Tank tank){
         if (this.position.equals(tank.getPosition())) {
             this.goInvisible();
+            hit.play(true);
             tank.beHit(DAMAGE);
         }
     }

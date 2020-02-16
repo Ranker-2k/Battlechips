@@ -9,7 +9,6 @@ public enum Graphics {
     PICKABLE;
 
     public String getGraphic(Directions direction) {
-
         switch (this) {
             case PLAYER1:
                 return graphP1(direction);
@@ -26,7 +25,6 @@ public enum Graphics {
     }
 
     private String graphP1(Directions directions) {
-
         switch (directions) {
             case UP:
                 return "resources/chip1up.png";
@@ -40,7 +38,6 @@ public enum Graphics {
     }
 
     private String graphP2(Directions direction) {
-
         switch (direction) {
             case UP:
                 return "resources/chip2up.png";
@@ -54,7 +51,6 @@ public enum Graphics {
     }
 
     private String graphBullet(Directions direction, boolean bit) {
-
         switch (direction) {
             case UP:
             case DOWN:
