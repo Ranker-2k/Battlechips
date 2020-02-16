@@ -14,6 +14,7 @@ public class Tank implements Movable {
     private int memory;
     private static final int MAX_MEMORY = 300;
     private Bullet[] bulletArray;
+    private int bulletTimmer;
 
     private Position position;
     private Directions currentDirection;
@@ -38,21 +39,23 @@ public class Tank implements Movable {
         populateBulletArray();
 
         this.memory = 0;
+        this.bulletTimmer = 0;
 
         this.memoryGauge = new Memory(playerID);
 
         this.collide = new Sound(" resources/sfx/colide_1.wav");
 
     }
+
     public Bullet[] getBulletArray() {
         return bulletArray;
     }
 
-    public int getMemory(){
+    public int getMemory() {
         return this.memory;
     }
 
-    public void setMemory(){
+    public void setMemory() {
         this.memory = MAX_MEMORY;
     }
 
@@ -73,6 +76,12 @@ public class Tank implements Movable {
             if (bulletArray[i].isVisible()) {
                 continue;
             }
+
+            if (bulletTimmer != 0) {
+                return;
+            }
+            bulletTimmer = 10;
+
             bulletArray[i].resetPosition(this.position.getxWidth() + 20, this.position.getyHeight() + 20, this.position.getDirection());
             return;
         }
@@ -80,6 +89,10 @@ public class Tank implements Movable {
 
     //updating visual representation of bullets;
     public void bulletRefresh(int distance) {
+
+        if (bulletTimmer != 0) {
+            bulletTimmer--;
+        }
 
         for (int i = 0; i < this.getBulletArray().length; i++) {
 
@@ -96,7 +109,8 @@ public class Tank implements Movable {
 
     }
 
-    public void memoryRefresh(){
+    public void memoryRefresh() {
+
         this.memoryGauge.resetMemoryGauge();
         this.memory = 0;
     }
@@ -106,7 +120,7 @@ public class Tank implements Movable {
         this.memory += damage;
         this.memoryGauge.fillMemory(damage);
 
-        if (this.memory >= MAX_MEMORY){
+        if (this.memory >= MAX_MEMORY) {
             destroyed = true;
             this.memory = MAX_MEMORY;
         }
@@ -131,8 +145,8 @@ public class Tank implements Movable {
     }
 
     public void collideTank(Tank tank) {
-        tank.position.movePosition(COLLIDE_DISTANCE,this.position.getDirection());
-        this.position.movePosition(COLLIDE_DISTANCE,this.position.getDirection().getOppositeDirection());
+        tank.position.movePosition(COLLIDE_DISTANCE, this.position.getDirection());
+        this.position.movePosition(COLLIDE_DISTANCE, this.position.getDirection().getOppositeDirection());
 
         this.collide.play(true);
 

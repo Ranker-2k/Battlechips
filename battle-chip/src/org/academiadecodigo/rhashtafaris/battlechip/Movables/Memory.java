@@ -33,20 +33,25 @@ public class Memory {
 
         if (playerID.equals("player2")) {
             this.rectangle.translate(growFactor*VISUAL_CONVERSION, 0);
+            currentWidth += growFactor*VISUAL_CONVERSION;
             return;
         }
-        this.rectangle.translate(-growFactor*VISUAL_CONVERSION, 0);
 
+        this.rectangle.translate(-growFactor*VISUAL_CONVERSION, 0);
         currentWidth += growFactor*VISUAL_CONVERSION;
     }
 
     void resetMemoryGauge(){
 
+        if (playerID.equals("player2")){
             this.rectangle.grow(-currentWidth, 0);
+            this.rectangle.translate(-54, 0);
+            currentWidth = 0;
+            return;
+        }
 
-            if (playerID.equals("player1")){
-                this.rectangle.translate(-70, 0);
-            }
-
+        this.rectangle.grow(-currentWidth, 0);
+        this.rectangle.translate(50, 0);
+        currentWidth = 0;
     }
 }

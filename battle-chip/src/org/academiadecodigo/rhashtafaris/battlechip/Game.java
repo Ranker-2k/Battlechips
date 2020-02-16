@@ -42,6 +42,9 @@ public class Game {
         player1 = new Tank(350, 915, Directions.LEFT, Graphics.PLAYER1, "player1");
         player2 = new Tank(350, 305, Directions.RIGHT, Graphics.PLAYER2, "player2");
 
+        this.currentPickable = new FreeMemory();
+        this.currentPickable.goInvisible();
+
         this.pickAppear = false;
 
     }
@@ -114,7 +117,7 @@ public class Game {
         this.pickAppear = false;
     }
 
-    private FreeMemory throwPickable() {
+    private void throwPickable() {
 
         setPickAppear();
 
@@ -124,10 +127,9 @@ public class Game {
             pickableNumber++;
 
             this.currentPickable = new FreeMemory();
-            return this.currentPickable;
+            this.currentPickable.goVisible();
         }
 
-        return null;
     }
 
     Tank getPlayer1() {

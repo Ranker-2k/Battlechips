@@ -23,42 +23,46 @@ public class CollisionDetector {
             bulletP2.checkBulletHits(player1);
         }
 
-        for (Bullet bulletP1: player1.getBulletArray()){
-            if (!bulletP1.isVisible()){
+        for (Bullet bulletP1 : player1.getBulletArray()) {
+            if (!bulletP1.isVisible()) {
                 continue;
             }
             bulletP1.checkBulletHits(player2);
         }
     }
 
-    public void tankCollisionCheck (Tank player1, Tank player2){
+    public void tankCollisionCheck(Tank player1, Tank player2) {
 
-        if (player1.getPosition().equals(player2.getPosition())){
+        if (player1.getPosition().equals(player2.getPosition())) {
             player1.collideTank(player2);
         }
     }
 
-    public void pickableCollisionCheck (Tank player1, Tank player2, FreeMemory pickable){
+    public void pickableCollisionCheck(Tank player1, Tank player2, Pickables pickable) {
 
-        if (pickable == null){
+        if (pickable == null) {
             return;
         }
-        if (pickable.getPosition().equals(player1.getPosition())){
+        if (pickable.getPosition().equals(player1.getPosition())) {
 
-            System.out.println("1");
+            if (!pickable.isVisible()) {
+                return;
+            }
             player1.setMemory();
             pickable.goInvisible();
-            game.resetCurrentPickable();
             player1.memoryRefresh();
             return;
         }
 
-        if (pickable.getPosition().equals(player2.getPosition())){
-            System.out.println("2");
+        if (pickable.getPosition().equals(player2.getPosition())) {
+
+            if (!pickable.isVisible()) {
+                return;
+            }
             player2.setMemory();
             pickable.goInvisible();
-            game.resetCurrentPickable();
             player2.memoryRefresh();
+
         }
     }
 }

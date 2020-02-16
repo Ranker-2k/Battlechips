@@ -8,4 +8,6 @@ public interface Pickables {
     int randomYPosition();
     Position getPosition();
     void goInvisible();
+    void goVisible();
+    boolean isVisible();
 }
