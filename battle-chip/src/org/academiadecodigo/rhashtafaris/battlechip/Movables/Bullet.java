@@ -20,8 +20,8 @@ public class Bullet implements Movable {
         this.currentDirection = directions;
         this.visible = false;
         this.position.hide();
-        this.hit = new Sound(" resources/sfx/hit.wav");
-        this.shoot = new Sound(" resources/sfx/shoot_1.wav");
+        this.hit = new Sound("resources/sfx/hit.wav");
+        this.shoot = new Sound("resources/sfx/shoot_1.wav");
     }
 
     public boolean isVisible() {

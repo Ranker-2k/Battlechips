@@ -9,10 +9,10 @@ public class Grid {
 
     public Grid (){
 
-        canvas = new Picture(0,0,"canvas.png") ;
+        canvas = new Picture(0,0,"resources/canvas.png") ;
         canvas.draw();
 
-        Picture canvasAddition = new Picture(0, canvas.getHeight(), "score.png");
+        Picture canvasAddition = new Picture(0, canvas.getHeight(), "resources/score.png");
         canvasAddition.draw();
 
     }

@@ -16,7 +16,7 @@ public enum Graphics {
             case PLAYER2:
                 return graphP2(direction);
             case PICKABLE:
-                return "pickable_1.png";
+                return "resources/pickable_1.png";
             default:
                 if (((int) (Math.random() * 2)) < 1) {
                     return graphBullet(direction, true); //1
@@ -29,13 +29,13 @@ public enum Graphics {
 
         switch (directions) {
             case UP:
-                return "chip1up.png";
+                return "resources/chip1up.png";
             case DOWN:
-                return "chip1down.png";
+                return "resources/chip1down.png";
             case LEFT:
-                return "chip1left.png";
+                return "resources/chip1left.png";
             default:
-                return "chip1right.png";
+                return "resources/chip1right.png";
         }
     }
 
@@ -43,13 +43,13 @@ public enum Graphics {
 
         switch (direction) {
             case UP:
-                return "chip2up.png";
+                return "resources/chip2up.png";
             case DOWN:
-                return "chip2down.png";
+                return "resources/chip2down.png";
             case LEFT:
-                return "chip2left.png";
+                return "resources/chip2left.png";
             default:
-                return "chip2right.png";
+                return "resources/chip2right.png";
         }
     }
 
@@ -58,9 +58,9 @@ public enum Graphics {
         switch (direction) {
             case UP:
             case DOWN:
-                return (bit) ? "bullet1UD.png" : "bullet0UD.png";
+                return (bit) ? "resources/bullet1UD.png" : "resources/bullet0UD.png";
             default:
-                return (bit) ? "bullet1LR.png" : "bullet0LR.png";
+                return (bit) ? "resources/bullet1LR.png" : "resources/bullet0LR.png";
         }
     }
 }

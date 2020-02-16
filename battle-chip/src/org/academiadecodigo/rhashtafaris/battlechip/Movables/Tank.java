@@ -43,7 +43,7 @@ public class Tank implements Movable {
 
         this.memoryGauge = new Memory(playerID);
 
-        this.collide = new Sound(" resources/sfx/colide_1.wav");
+        this.collide = new Sound("resources/sfx/colide_1.wav");
 
     }
 

@@ -16,11 +16,11 @@ public class Menu {
         gameStart = false;
         instructions = false;
         offInfo = false;
-        this.music = new Sound(" resources/sfx/gameTheme_4.wav");
+        this.music = new Sound("resources/sfx/gameTheme_4.wav");
     }
 
     public void createMenu() {
-        canvasMenu = new Picture(0, 0, "menu.png");
+        canvasMenu = new Picture(0, 0, "resources/menu.png");
         canvasMenu.draw();
 
         this.music.play(true);
@@ -54,7 +54,7 @@ public class Menu {
 
         if (!offInfo) {
 
-            canvasMenu = new Picture(0, 0, "info.png");
+            canvasMenu = new Picture(0, 0, "resources/info.png");
             canvasMenu.draw();
             offInfo = true;
         }

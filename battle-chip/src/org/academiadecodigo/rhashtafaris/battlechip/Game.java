@@ -42,7 +42,7 @@ public class Game {
 
         //music = new Sound(" resources/sfx/gameTheme_4.wav");
 
-        this.pickableAppears = new Sound (" resources/sfx/pickAppears.wav");
+        this.pickableAppears = new Sound ("resources/sfx/pickAppears.wav");
 
         player1 = new Tank(350, 915, Directions.LEFT, Graphics.PLAYER1, "player1");
         player2 = new Tank(350, 305, Directions.RIGHT, Graphics.PLAYER2, "player2");
@@ -76,12 +76,12 @@ public class Game {
             }
 
             if (player2.isDestroyed()) {
-                Picture gameOver = new Picture(344, 286, "stackP2.png");
+                Picture gameOver = new Picture(344, 286, "resources/stackP2.png");
                 gameOver.draw();
             }
 
             if (player1.isDestroyed()) {
-                Picture gameOver = new Picture(344, 286, "stackP1.png");
+                Picture gameOver = new Picture(344, 286, "resources/stackP1.png");
                 gameOver.draw();
             }
 
