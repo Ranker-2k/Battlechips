@@ -9,15 +9,48 @@ import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
 public class KeyboardController implements KeyboardHandler {
 
     private Game game;
+    private Menu menu;
 
-    public KeyboardController(Game game){
+    public void setGame(Game game){
         this.game = game;
     }
+
+    public void setMenu(Menu menu){
+        this.menu = menu;
+    }
+
 
 
     void keyboardInit() {
 
         Keyboard keyboard = new Keyboard(this);
+
+        /**
+         * Menu keys
+         */
+        //Start - 1
+        KeyboardEvent key1Press = new KeyboardEvent();
+        key1Press.setKey(KeyboardEvent.KEY_1);
+        key1Press.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        keyboard.addEventListener(key1Press);
+
+        //Instructions - 2
+        KeyboardEvent key2Press = new KeyboardEvent();
+        key2Press.setKey(KeyboardEvent.KEY_2);
+        key2Press.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        keyboard.addEventListener(key2Press);
+
+        //Back - B
+        KeyboardEvent keyBPress = new KeyboardEvent();
+        keyBPress.setKey(KeyboardEvent.KEY_B);
+        keyBPress.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        keyboard.addEventListener(keyBPress);
+
+        //game out - 0
+        KeyboardEvent key0Press = new KeyboardEvent();
+        key0Press.setKey(KeyboardEvent.KEY_0);
+        key0Press.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+        keyboard.addEventListener(key0Press);
 
 
         /**
@@ -133,8 +166,24 @@ public class KeyboardController implements KeyboardHandler {
 
             case KeyboardEvent.KEY_C:
                 System.out.println(game);
-                System.out.println(game.getPlayer2());
                 game.getPlayer2().shoot();
+                break;
+
+            case KeyboardEvent.KEY_1:
+                menu.startGame();
+                break;
+
+            case KeyboardEvent.KEY_2:
+                menu.instructionsTrue();
+                break;
+
+            case KeyboardEvent.KEY_B:
+                menu.backMenu();
+                break;
+            case KeyboardEvent.KEY_0:
+                if (game != null && game.isGameFinish()) {
+                    game.gameOutToTrue();
+                }
                 break;
         }
     }
