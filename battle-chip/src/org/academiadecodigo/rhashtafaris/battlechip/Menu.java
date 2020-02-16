@@ -20,6 +20,7 @@ public class Menu {
         canvasMenu = new Picture(0, 0, "menu.png");
         canvasMenu.draw();
 
+
         try {
 
         while (!gameStart){
