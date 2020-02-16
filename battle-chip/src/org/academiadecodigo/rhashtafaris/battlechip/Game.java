@@ -19,16 +19,18 @@ public class Game {
     private boolean pickAppear;
     private int pickableNumber;
     private FreeMemory currentPickable;
+    private boolean gameOut;
+    private boolean gameFinish;
 
 
     private Sound music;
 
     private CollisionDetector collisionDetector;
-    private KeyboardController keyboard;
 
     Game() {
+        gameOut = false;
+        gameFinish = false;
 
-        this.keyboard = new KeyboardController(this);
     }
 
     private void init() {
@@ -36,7 +38,6 @@ public class Game {
         Grid canvas = new Grid();
 
         this.collisionDetector = new CollisionDetector(this);
-        this.keyboard.keyboardInit();
         music = new Sound(" resources/sfx/gameTheme_4.wav");
 
         player1 = new Tank(350, 915, Directions.LEFT, Graphics.PLAYER1, "player1");
@@ -80,7 +81,13 @@ public class Game {
                 gameOver.draw();
             }
 
-            //music.close();
+            gameFinish = true;
+
+            while (!gameOut) {
+
+                Thread.sleep(200);
+
+            }
 
         } catch (InterruptedException exception) {
             exception.printStackTrace();
@@ -142,6 +149,14 @@ public class Game {
 
     public void resetCurrentPickable(){
         this.currentPickable = null;
+    }
+
+    public void gameOutToTrue(){
+        this.gameOut = true;
+    }
+
+    public boolean isGameFinish(){
+        return gameFinish;
     }
 
 }
