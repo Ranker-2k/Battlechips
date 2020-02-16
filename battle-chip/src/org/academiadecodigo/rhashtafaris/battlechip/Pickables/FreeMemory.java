@@ -52,14 +52,4 @@ public class FreeMemory implements Pickables {
         return this.position;
     }
 
-    /*
-    public void disappear(){
-        this.setVisible();
-    }*/
-
-
-
-
-
-
 }

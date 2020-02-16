@@ -9,9 +9,12 @@ public class Memory {
     private static final double VISUAL_CONVERSION = 0.31;
     private Rectangle rectangle;
     private String playerID;
+    private int currentWidth;
+
 
     public Memory(String playerID) {
         this.playerID = playerID;
+        this.currentWidth = 0;
 
         if (playerID.equals("player1")) {
             this.rectangle = new Rectangle(1230, 823, 0, HEIGHT);
@@ -33,5 +36,17 @@ public class Memory {
             return;
         }
         this.rectangle.translate(-growFactor*VISUAL_CONVERSION, 0);
+
+        currentWidth += growFactor*VISUAL_CONVERSION;
+    }
+
+    void resetMemoryGauge(){
+
+            this.rectangle.grow(-currentWidth, 0);
+
+            if (playerID.equals("player1")){
+                this.rectangle.translate(-70, 0);
+            }
+
     }
 }

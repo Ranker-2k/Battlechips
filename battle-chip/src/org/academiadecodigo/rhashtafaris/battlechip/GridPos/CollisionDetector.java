@@ -40,25 +40,26 @@ public class CollisionDetector {
 
     public void pickableCollisionCheck (Tank player1, Tank player2, FreeMemory pickable){
 
-        //System.out.println("0");
-
         if (pickable == null){
             return;
         }
-        if (player1.getPosition().equals(pickable.getPosition())){
+        if (pickable.getPosition().equals(player1.getPosition())){
+
             System.out.println("1");
             player1.setMemory();
             pickable.goInvisible();
+            game.resetCurrentPickable();
+            player1.memoryRefresh();
             return;
         }
-        if (player2.getPosition().equals(pickable.getPosition())){
+
+        if (pickable.getPosition().equals(player2.getPosition())){
             System.out.println("2");
             player2.setMemory();
             pickable.goInvisible();
+            game.resetCurrentPickable();
+            player2.memoryRefresh();
         }
-
     }
-
-
 }
 

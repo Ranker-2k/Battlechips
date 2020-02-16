@@ -93,6 +93,12 @@ public class Tank implements Movable {
             }
             this.bulletArray[i].movePosition(distance);
         }
+
+    }
+
+    public void memoryRefresh(){
+        this.memoryGauge.resetMemoryGauge();
+        this.memory = 0;
     }
 
     public void beHit(int damage) {

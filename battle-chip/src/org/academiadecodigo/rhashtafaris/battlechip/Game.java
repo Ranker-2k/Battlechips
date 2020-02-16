@@ -62,6 +62,7 @@ public class Game {
                 collisionDetector.pickableCollisionCheck(player1, player2, this.currentPickable);
                 refreshBullets();
                 refreshTanks();
+
                 collisionDetector.collisionCheck(player1, player2);
 
             }
@@ -104,24 +105,22 @@ public class Game {
             this.pickAppear = true;
             return;
         }
+        /*
         if (((player1.getMemory() > 250 || player2.getMemory() > 250) && pickableNumber == 1)) {
             this.pickAppear = true;
             return;
-        }
+        }*/
 
         this.pickAppear = false;
     }
 
     private FreeMemory throwPickable() {
 
-
         setPickAppear();
-
 
         if (this.pickAppear) {
 
             this.pickAppear = false;
-
             pickableNumber++;
 
             this.currentPickable = new FreeMemory();
@@ -137,6 +136,10 @@ public class Game {
 
     Tank getPlayer2() {
         return this.player2;
+    }
+
+    public void resetCurrentPickable(){
+        this.currentPickable = null;
     }
 
 }
