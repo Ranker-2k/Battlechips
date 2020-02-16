@@ -52,6 +52,10 @@ public class Tank implements Movable {
         return this.memory;
     }
 
+    public void setMemory(){
+        this.memory = MAX_MEMORY;
+    }
+
     public boolean isDestroyed() {
         return destroyed;
     }

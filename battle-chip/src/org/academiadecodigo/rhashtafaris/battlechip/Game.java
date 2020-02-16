@@ -16,7 +16,10 @@ public class Game {
 
     private Tank player1;
     private Tank player2;
-    private FreeMemory pickable;
+    private boolean pickAppear;
+    private int pickableNumber;
+    private FreeMemory currentPickable;
+
 
     private Sound music;
 
@@ -26,7 +29,6 @@ public class Game {
     Game() {
 
         this.keyboard = new KeyboardController(this);
-
     }
 
     private void init() {
@@ -40,67 +42,93 @@ public class Game {
         player1 = new Tank(350, 915, Directions.LEFT, Graphics.PLAYER1, "player1");
         player2 = new Tank(350, 305, Directions.RIGHT, Graphics.PLAYER2, "player2");
 
+        this.pickAppear = false;
+
     }
 
     void start() {
 
         init();
 
-        music.play(true);
-        music.setLoop(1);
+        //music.play(true);
+        //music.setLoop(1);
 
         try {
 
             while (!gameOver()) {
                 Thread.sleep(DELAY);
 
+                throwPickable();
+                collisionDetector.pickableCollisionCheck(player1, player2, this.currentPickable);
                 refreshBullets();
                 refreshTanks();
-                collisionDetector.collisionCheck(player1,player2);
-
-                //if (player1.getMemory() > 150 || player2.getMemory()){
-
-                //}
+                collisionDetector.collisionCheck(player1, player2);
 
             }
 
-            if (player2.isDestroyed()){
+            if (player2.isDestroyed()) {
                 Picture gameOver = new Picture(344, 286, "stackP2.png");
                 gameOver.draw();
             }
 
-            if (player1.isDestroyed()){
+            if (player1.isDestroyed()) {
                 Picture gameOver = new Picture(344, 286, "stackP1.png");
                 gameOver.draw();
             }
-            music.close();
+
+            //music.close();
 
         } catch (InterruptedException exception) {
             exception.printStackTrace();
         }
     }
 
-    private boolean gameOver (){
+    private boolean gameOver() {
         return (player1.isDestroyed() || player2.isDestroyed());
     }
 
-    private void refreshBullets(){
+    private void refreshBullets() {
         player1.bulletRefresh(DISTANCE);
         player2.bulletRefresh(DISTANCE);
     }
 
-    private void refreshTanks(){
+    private void refreshTanks() {
         player1.movePosition(DISTANCE);
-        collisionDetector.tankCollisionCheck(player1,player2);
+        collisionDetector.tankCollisionCheck(player1, player2);
         player2.movePosition(DISTANCE);
-        collisionDetector.collisionCheck(player2,player1);
+        collisionDetector.collisionCheck(player2, player1);
     }
 
-    private FreeMemory throwPickable (){
+    private void setPickAppear() {
+        if (((player1.getMemory() > 150 || player2.getMemory() > 150) && pickableNumber == 0)) {
+            this.pickAppear = true;
+            return;
+        }
+        if (((player1.getMemory() > 250 || player2.getMemory() > 250) && pickableNumber == 1)) {
+            this.pickAppear = true;
+            return;
+        }
 
-        this.pickable = new FreeMemory();
+        this.pickAppear = false;
+    }
 
-        return this.pickable;
+    private FreeMemory throwPickable() {
+
+
+        setPickAppear();
+
+
+        if (this.pickAppear) {
+
+            this.pickAppear = false;
+
+            pickableNumber++;
+
+            this.currentPickable = new FreeMemory();
+            return this.currentPickable;
+        }
+
+        return null;
     }
 
     Tank getPlayer1() {

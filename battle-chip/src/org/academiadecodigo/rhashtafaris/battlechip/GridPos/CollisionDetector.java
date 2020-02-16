@@ -3,6 +3,8 @@ package org.academiadecodigo.rhashtafaris.battlechip.GridPos;
 import org.academiadecodigo.rhashtafaris.battlechip.Game;
 import org.academiadecodigo.rhashtafaris.battlechip.Movables.Bullet;
 import org.academiadecodigo.rhashtafaris.battlechip.Movables.Tank;
+import org.academiadecodigo.rhashtafaris.battlechip.Pickables.FreeMemory;
+import org.academiadecodigo.rhashtafaris.battlechip.Pickables.Pickables;
 
 public class CollisionDetector {
 
@@ -34,6 +36,27 @@ public class CollisionDetector {
         if (player1.getPosition().equals(player2.getPosition())){
             player1.collideTank(player2);
         }
+    }
+
+    public void pickableCollisionCheck (Tank player1, Tank player2, FreeMemory pickable){
+
+        //System.out.println("0");
+
+        if (pickable == null){
+            return;
+        }
+        if (player1.getPosition().equals(pickable.getPosition())){
+            System.out.println("1");
+            player1.setMemory();
+            pickable.goInvisible();
+            return;
+        }
+        if (player2.getPosition().equals(pickable.getPosition())){
+            System.out.println("2");
+            player2.setMemory();
+            pickable.goInvisible();
+        }
+
     }
 
 

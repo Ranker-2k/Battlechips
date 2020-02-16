@@ -13,8 +13,9 @@ public class FreeMemory implements Pickables {
     private Graphics graphicType;
     private static final int INITIAL_RANGE = 20;
     private static final int FINAL_RANGE = 70;
+    private boolean visible;
 
-    public FreeMemory(){
+    public FreeMemory() {
 
         int x = randomXPosition();
         int y = randomYPosition();
@@ -22,11 +23,19 @@ public class FreeMemory implements Pickables {
         this.graphicType = Graphics.PICKABLE;
 
         this.position = new Position(x, y, Directions.STILL, graphicType);
+
+        //Picture picture
         this.picture = new Picture(x, y, graphicType.getGraphic(Directions.STILL));
 
         this.position.show(Directions.STILL);
+        this.visible = true;
     }
 
+    @Override
+    public void goInvisible() {
+        this.visible = false;
+        this.position.hide();
+    }
 
     @Override
     public int randomXPosition() {
@@ -37,4 +46,20 @@ public class FreeMemory implements Pickables {
     public int randomYPosition() {
         return (int) Math.floor(Math.random() * (Grid.getHeight() - FINAL_RANGE) + INITIAL_RANGE);
     }
+
+    @Override
+    public Position getPosition() {
+        return this.position;
+    }
+
+    /*
+    public void disappear(){
+        this.setVisible();
+    }*/
+
+
+
+
+
+
 }

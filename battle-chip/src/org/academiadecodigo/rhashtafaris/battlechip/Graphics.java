@@ -16,7 +16,7 @@ public enum Graphics {
             case PLAYER2:
                 return graphP2(direction);
             case PICKABLE:
-                return "pickable.png";
+                return "pickable_1.png";
             default:
                 if (((int) (Math.random() * 2)) < 1) {
                     return graphBullet(direction, true); //1
