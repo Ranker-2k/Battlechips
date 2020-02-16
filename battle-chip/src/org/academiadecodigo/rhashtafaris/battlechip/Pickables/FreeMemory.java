@@ -27,14 +27,23 @@ public class FreeMemory implements Pickables {
         //Picture picture
         this.picture = new Picture(x, y, graphicType.getGraphic(Directions.STILL));
 
-        this.position.show(Directions.STILL);
-        this.visible = true;
     }
+
+    public boolean isVisible(){
+        return this.visible;
+    }
+
 
     @Override
     public void goInvisible() {
         this.visible = false;
         this.position.hide();
+    }
+
+    @Override
+    public void goVisible() {
+       this.visible = true;
+       this.position.show(Directions.STILL);
     }
 
     @Override
