@@ -16,7 +16,7 @@ public class Menu {
         gameStart = false;
         instructions = false;
         offInfo = false;
-        this.music = new Sound("resources/sfx/gameTheme_4.wav");
+        this.music = new Sound("/resources/sfx/gameTheme_4.wav");
     }
 
     public void createMenu() {
@@ -36,10 +36,10 @@ public class Menu {
                     startInstructions();
                 }
             }
-            this.music.close();
+            this.music.stop();
 
         } catch (InterruptedException ex) {
-            System.out.println("menu rong!!!");
+            System.out.println("something wrong with the menu.");
         }
     }
 

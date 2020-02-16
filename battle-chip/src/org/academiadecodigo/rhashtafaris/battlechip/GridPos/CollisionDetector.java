@@ -14,7 +14,7 @@ public class CollisionDetector {
 
     public CollisionDetector(Game game) {
         this.game = game;
-        this.catchPickable = new Sound (" resources/sfx/getPickable.wav");
+        this.catchPickable = new Sound ("/resources/sfx/getPickable.wav");
     }
 
     public void collisionCheck(Tank player1, Tank player2) {

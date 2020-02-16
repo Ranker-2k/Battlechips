@@ -22,8 +22,6 @@ public class Game {
     private boolean gameOut;
     private boolean gameFinish;
 
-
-    private Sound music;
     private Sound pickableAppears;
 
     private CollisionDetector collisionDetector;
@@ -40,9 +38,7 @@ public class Game {
 
         this.collisionDetector = new CollisionDetector(this);
 
-        //music = new Sound(" resources/sfx/gameTheme_4.wav");
-
-        this.pickableAppears = new Sound ("resources/sfx/pickAppears.wav");
+        this.pickableAppears = new Sound ("/resources/sfx/pickAppears.wav");
 
         player1 = new Tank(350, 915, Directions.LEFT, Graphics.PLAYER1, "player1");
         player2 = new Tank(350, 305, Directions.RIGHT, Graphics.PLAYER2, "player2");
@@ -57,9 +53,6 @@ public class Game {
     void start() {
 
         init();
-
-        //music.play(true);
-        //music.setLoop(1);
 
         try {
 
@@ -119,11 +112,6 @@ public class Game {
             this.pickAppear = true;
             return;
         }
-        /*
-        if (((player1.getMemory() > 250 || player2.getMemory() > 250) && pickableNumber == 1)) {
-            this.pickAppear = true;
-            return;
-        }*/
 
         this.pickAppear = false;
     }
@@ -142,9 +130,9 @@ public class Game {
             this.currentPickable = new FreeMemory();
             this.currentPickable.goVisible();
 
+        this.pickableAppears.stop();
         }
 
-        this.pickableAppears.stop();
 
     }
 
@@ -154,10 +142,6 @@ public class Game {
 
     Tank getPlayer2() {
         return this.player2;
-    }
-
-    public void resetCurrentPickable(){
-        this.currentPickable = null;
     }
 
     public void gameOutToTrue(){
